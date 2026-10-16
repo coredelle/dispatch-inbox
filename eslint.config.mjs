@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Local editor/tooling config, not app code
+    ".claude/**",
   ]),
 ]);
 

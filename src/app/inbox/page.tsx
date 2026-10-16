@@ -56,7 +56,10 @@ export default async function InboxPage({ searchParams }: PageProps<"/inbox">) {
     <main className="mx-auto w-full max-w-6xl p-6">
       <div className="flex items-center justify-between gap-4">
         <h1 className="text-2xl font-bold">Inbox</h1>
-        <Link href="/loads/new" className={cn(buttonVariants())}>New load</Link>
+        <div className="flex items-center gap-4">
+          <Link href="/about" className="text-sm underline-offset-4 hover:underline">About this demo</Link>
+          <Link href="/loads/new" className={cn(buttonVariants())}>New load</Link>
+        </div>
       </div>
 
       {isDemoUser(user) && (
