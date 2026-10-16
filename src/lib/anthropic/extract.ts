@@ -32,6 +32,16 @@ export function extractFromEmail(text: string): Promise<ExtractionOutcome> {
   ]);
 }
 
+export function extractFromPdf(base64Pdf: string): Promise<ExtractionOutcome> {
+  return runExtraction([
+    {
+      type: "document",
+      source: { type: "base64", media_type: "application/pdf", data: base64Pdf },
+    },
+    { type: "text", text: "Extract the load details from this rate confirmation." },
+  ]);
+}
+
 async function runExtraction(
   content: Anthropic.ContentBlockParam[],
 ): Promise<ExtractionOutcome> {
@@ -73,7 +83,7 @@ async function runExtraction(
     if (stopReason === "max_tokens") {
       return finish({
         fields: null,
-        error: "The response was too long to finish. Try a shorter email.",
+        error: "The response was too long to finish. Try a shorter document.",
         stopReason,
       });
     }

@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { font-family: Helvetica, Arial, sans-serif; font-size: 11pt; color: #111; margin: 36px; }
+  h1 { font-size: 18pt; margin: 0; }
+  .muted { color: #555; font-size: 9.5pt; }
+  .header { display: flex; justify-content: space-between; border-bottom: 2px solid #111; padding-bottom: 10px; margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 18px; }
+  th, td { border: 1px solid #999; padding: 6px 8px; text-align: left; vertical-align: top; }
+  th { background: #eee; font-size: 9.5pt; text-transform: uppercase; }
+  h2 { font-size: 11pt; text-transform: uppercase; margin: 18px 0 4px; }
+  .total td { font-weight: bold; }
+</style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <h1>Harborview Logistics</h1>
+      <div class="muted">410 Commerce Pkwy, Suite 200, Savannah, GA 31408<br>MC# 000000 (sample) · (912) 555-0163 · loads@harborviewlogistics.example</div>
+    </div>
+    <div style="text-align:right">
+      <strong>RATE CONFIRMATION</strong><br>
+      Load #: HVL-208841<br>
+      Date: 10/28/2026
+    </div>
+  </div>
+
+  <p><strong>Carrier:</strong> Ridgeline Freight LLC &nbsp;·&nbsp; dispatch@ridgelinefreight.example</p>
+
+  <h2>Stops</h2>
+  <table>
+    <tr><th>#</th><th>Type</th><th>Facility / Address</th><th>Date / Time</th><th>Ref</th></tr>
+    <tr>
+      <td>1</td><td>Pickup</td>
+      <td>Magnolia Home Furnishings DC<br>2875 Fulton Industrial Blvd SW<br>Atlanta, GA 30336</td>
+      <td>11/12/2026<br>09:00 – 13:00</td>
+      <td>PU# MHF-77120</td>
+    </tr>
+    <tr>
+      <td>2</td><td>Delivery</td>
+      <td>Carolina Comfort Retail – Store Support Ctr<br>5100 Westinghouse Blvd<br>Charlotte, NC 28273</td>
+      <td>11/13/2026<br>08:00 – 16:00</td>
+      <td>DEL# CCR-4409</td>
+    </tr>
+  </table>
+
+  <h2>Load details</h2>
+  <table>
+    <tr><th>Commodity</th><th>Pieces</th><th>Weight</th><th>Equipment</th></tr>
+    <tr><td>Boxed furniture (sofas, chairs)</td><td>18 pallets</td><td>24,300 lbs</td><td>53' Dry Van</td></tr>
+  </table>
+
+  <h2>Rate</h2>
+  <table>
+    <tr><th>Description</th><th>Amount</th></tr>
+    <tr><td>Line haul</td><td>$1,180.00</td></tr>
+    <tr><td>Fuel surcharge</td><td>$145.00</td></tr>
+    <tr class="total"><td>Total carrier pay</td><td>$1,325.00</td></tr>
+  </table>
+
+  <h2>Special instructions</h2>
+  <p>Load bars required. Driver must call Harborview dispatch on arrival at each stop. Blanket-wrapped items: do not double stack.</p>
+
+  <h2>Broker contact</h2>
+  <p>Jordan Ellis, Carrier Sales · (912) 555-0163 · jellis@harborviewlogistics.example</p>
+
+  <p class="muted">Fictional sample document for the Dispatch Inbox demo. All companies, addresses and numbers are invented.</p>
+</body>
+</html>
