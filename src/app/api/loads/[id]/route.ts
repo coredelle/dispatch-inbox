@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { normalizeFields } from "@/lib/loads";
+import { computeMissing, normalizeFields } from "@/lib/loads";
 
 const STATUSES = ["needs_review", "approved", "rejected"] as const;
 type Status = (typeof STATUSES)[number];
@@ -29,7 +29,11 @@ export async function PATCH(request: Request, ctx: RouteContext<"/api/loads/[id]
   }
 
   const update: Record<string, unknown> = {};
-  if (body.fields) update.fields = normalizeFields(body.fields);
+  if (body.fields) {
+    const fields = normalizeFields(body.fields);
+    update.fields = fields;
+    update.missing_fields = computeMissing(fields);
+  }
   if (status) {
     if (status === "approved" && !update.fields && !load.fields) {
       return NextResponse.json({ error: "There are no fields to approve." }, { status: 400 });
@@ -42,7 +46,7 @@ export async function PATCH(request: Request, ctx: RouteContext<"/api/loads/[id]
     .from("loads")
     .update(update)
     .eq("id", id)
-    .select("id, status, fields, approved_at")
+    .select("id, status, fields, missing_fields, approved_at")
     .single();
   if (error || !updated) {
     console.error("Load update failed:", error);

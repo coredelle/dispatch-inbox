@@ -1,4 +1,6 @@
 export const MODEL_NAME = "claude-sonnet-5-5";
+// Cheap model for the short follow-up email draft
+export const FOLLOWUP_MODEL_NAME = "claude-haiku-5-5";
 
 // Per-million-token prices (USD). Swap when comparing haiku vs sonnet.
 export const TOKEN_PRICES: Record<string, { input: number; output: number }> = {

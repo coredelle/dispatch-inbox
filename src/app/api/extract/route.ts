@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { extractFromEmail, extractFromPdf, type ExtractionOutcome } from "@/lib/anthropic/extract";
+import { draftFollowup } from "@/lib/anthropic/followup";
+import { computeMissing, normalizeFields } from "@/lib/loads";
+import { logRun } from "@/lib/runs";
 
 // Give the Claude call room to finish on Vercel
 export const maxDuration = 60;
@@ -69,26 +72,24 @@ export async function POST(request: Request) {
 
   const outcome = await runExtraction();
 
-  const { error: runError } = await supabase.from("extraction_runs").insert({
-    load_id: load.id,
-    model: outcome.model,
-    input_tokens: outcome.inputTokens,
-    output_tokens: outcome.outputTokens,
-    latency_ms: outcome.latencyMs,
-    est_cost_usd: outcome.estCostUsd,
-    stop_reason: outcome.stopReason,
-    error: outcome.error,
-  });
-  if (runError) console.error("Extraction run insert failed:", runError);
+  await logRun(supabase, load.id, outcome);
 
-  const update = outcome.fields
-    ? {
-        extracted: outcome.fields,
-        fields: outcome.fields,
-        missing_fields: outcome.fields.missing_fields,
-        low_confidence_fields: outcome.fields.low_confidence_fields,
-      }
-    : { status: "failed" };
+  let update: Record<string, unknown> = { status: "failed" };
+  if (outcome.fields) {
+    const fields = normalizeFields(outcome.fields);
+    const missing = computeMissing(fields);
+    update = {
+      extracted: outcome.fields,
+      fields,
+      missing_fields: missing,
+      low_confidence_fields: fields.low_confidence_fields,
+    };
+    if (missing.length > 0) {
+      const followup = await draftFollowup(fields, missing);
+      await logRun(supabase, load.id, followup);
+      update.followup_draft = followup.draft;
+    }
+  }
   const { error: updateError } = await supabase
     .from("loads")
     .update(update)

@@ -52,3 +52,40 @@ export function normalizeFields(input: unknown): LoadFields {
     low_confidence_fields: strList(f.low_confidence_fields),
   };
 }
+
+// Keys match the schema's missing_fields enum
+export const MISSING_FIELD_LABELS: Record<string, string> = {
+  shipper_name: "shipper name",
+  "pickup.location": "pickup location",
+  "pickup.date": "pickup date/time",
+  "delivery.location": "delivery location",
+  "delivery.date": "delivery date/time",
+  commodity: "commodity",
+  weight_lbs: "weight",
+  equipment_type: "equipment type",
+  rate_usd: "rate",
+  contact: "contact details",
+};
+
+// Derived from the current values, so edits clear (or add) missing fields
+export function computeMissing(f: LoadFields): string[] {
+  const missing: string[] = [];
+  if (!f.shipper_name) missing.push("shipper_name");
+  if (!f.pickup.location) missing.push("pickup.location");
+  if (!f.pickup.earliest && !f.pickup.latest) missing.push("pickup.date");
+  if (!f.delivery.location) missing.push("delivery.location");
+  if (!f.delivery.earliest && !f.delivery.latest) missing.push("delivery.date");
+  if (!f.commodity) missing.push("commodity");
+  if (f.weight_lbs === null) missing.push("weight_lbs");
+  if (f.equipment_type === "unknown") missing.push("equipment_type");
+  if (f.rate_usd === null) missing.push("rate_usd");
+  if (!f.contact.name && !f.contact.email && !f.contact.phone) missing.push("contact");
+  return missing;
+}
+
+// Flag keys from the model vary ("pickup.earliest", "pickup.date", "pickup"),
+// so an input matches its own path, its group key, or its top-level section
+export function isFlagged(list: string[], path: string, group?: string): boolean {
+  const section = path.split(".")[0];
+  return list.some((k) => k === path || k === group || k === section);
+}
