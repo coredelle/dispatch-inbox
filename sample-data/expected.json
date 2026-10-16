@@ -1,0 +1,145 @@
+{
+  "_readme": "Answer key for scripts/eval-extraction.ts. Dates are YYYY-MM-DD and match either earliest or latest. 'ambiguous' keys must be left empty or flagged low-confidence (a confident value fails). 'expect_low' keys must be flagged. 'allow_low' keys may be flagged without a warning.",
+  "emails/01-tidy-dry-van.txt": {
+    "shipper": "Blue Pine Goods",
+    "pickup_city": "Columbus",
+    "pickup_date": "2026-11-04",
+    "delivery_city": "Nashville",
+    "delivery_date": "2026-11-05",
+    "weight_lbs": 38500,
+    "equipment": "dry_van",
+    "rate_usd": 1450,
+    "refs": [
+      "44817"
+    ],
+    "contact": "Dana Whitfield",
+    "missing": []
+  },
+  "emails/02-tidy-reefer.txt": {
+    "shipper": "Sunvale Farms",
+    "pickup_city": "Fresno",
+    "pickup_date": "2026-11-06",
+    "delivery_city": "Phoenix",
+    "delivery_date": "2026-11-07",
+    "weight_lbs": 37920,
+    "equipment": "reefer",
+    "rate_usd": 2100,
+    "refs": [
+      "SVF-20931",
+      "BOL 778120"
+    ],
+    "contact": "Marco Reyes",
+    "missing": []
+  },
+  "emails/03-tidy-flatbed.txt": {
+    "shipper": "Ironcrest Steel",
+    "pickup_city": "Gary",
+    "pickup_date": "2026-11-09",
+    "delivery_city": "Louisville",
+    "delivery_date": "2026-11-10",
+    "weight_lbs": 44000,
+    "equipment": "flatbed",
+    "rate_usd": 1875,
+    "refs": [
+      "IC-5562"
+    ],
+    "contact": "Priya Natarajan",
+    "missing": []
+  },
+  "emails/04-missing-rate-and-delivery.txt": {
+    "shipper": "Keystone Packaging",
+    "pickup_city": "Allentown",
+    "pickup_date": "2026-11-19",
+    "delivery_city": "Richmond",
+    "delivery_date": null,
+    "weight_lbs": 31000,
+    "equipment": "dry_van",
+    "rate_usd": null,
+    "refs": [
+      "KP-30118"
+    ],
+    "contact": "Tom Brandt",
+    "missing": [
+      "delivery.date",
+      "rate_usd"
+    ],
+    "allow_low": [
+      "weight_lbs"
+    ]
+  },
+  "emails/05-messy-forwarded-thread.txt": {
+    "shipper": "Harvest Lane Foods",
+    "pickup_city": "Memphis",
+    "pickup_date": "2026-11-16",
+    "delivery_city": "Dallas",
+    "delivery_date": "2026-11-17",
+    "weight_lbs": 38200,
+    "equipment": "dry_van",
+    "rate_usd": 1750,
+    "refs": [
+      "55190-H"
+    ],
+    "contact": "Lena Park",
+    "missing": []
+  },
+  "emails/06-messy-typo-date.txt": {
+    "shipper": "Pappas Produce",
+    "pickup_city": "Yakima",
+    "delivery_city": "West Valley City",
+    "weight_lbs": 34000,
+    "equipment": "reefer",
+    "refs": [],
+    "contact": "Gus",
+    "ambiguous": [
+      "pickup.date",
+      "delivery.date",
+      "rate_usd"
+    ],
+    "allow_low": [
+      "weight_lbs"
+    ],
+    "missing": []
+  },
+  "pdfs/ratecon-01-dry-van.pdf": {
+    "shipper": "Magnolia Home Furnishings",
+    "pickup_city": "Atlanta",
+    "pickup_date": "2026-11-12",
+    "delivery_city": "Charlotte",
+    "delivery_date": "2026-11-13",
+    "weight_lbs": 24300,
+    "equipment": "dry_van",
+    "rate_usd": 1325,
+    "refs": [
+      "HVL-208841",
+      "MHF-77120",
+      "CCR-4409"
+    ],
+    "contact": "Jordan Ellis",
+    "missing": [],
+    "allow_low": [
+      "shipper_name"
+    ]
+  },
+  "pdfs/ratecon-02-reefer-per-mile.pdf": {
+    "shipper": "Tri-Valley Dairy",
+    "pickup_city": "Nampa",
+    "pickup_date": "2026-11-16",
+    "delivery_city": "Clackamas",
+    "delivery_date": "2026-11-18",
+    "weight_lbs": 42990,
+    "equipment": "reefer",
+    "rate_usd": 1225.5,
+    "refs": [
+      "SCT-55-31907",
+      "88-2214"
+    ],
+    "contact": "Sam Okafor",
+    "expect_low": [
+      "pickup.date"
+    ],
+    "allow_low": [
+      "rate_usd"
+    ],
+    "missing": []
+  }
+}

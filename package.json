@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "demo:create-user": "node --env-file=.env.local scripts/create-demo-user.mjs"
+    "demo:create-user": "node --env-file=.env.local scripts/create-demo-user.mjs",
+    "eval": "tsx --env-file=.env.local --conditions=react-server scripts/eval-extraction.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.134.0",
@@ -32,6 +33,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.4.1",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   }
 }

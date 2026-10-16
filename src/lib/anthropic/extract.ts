@@ -7,7 +7,7 @@ import type { LoadFields } from "@/types";
 // Reads ANTHROPIC_API_KEY from the server environment
 const client = new Anthropic();
 
-const SYSTEM_PROMPT = `You extract freight load details from shipping emails and rate confirmations for a dispatcher. Use only information present in the document. If a value is absent, return null and list it in missing_fields; never guess. Put a field in low_confidence_fields when the document is ambiguous about it (for example, two different dates or a rate that might be per mile). Normalize dates to ISO 8601 and weights to pounds.`;
+const SYSTEM_PROMPT = `You extract freight load details from shipping emails and rate confirmations for a dispatcher. Use only information present in the document. If a value is absent, return null and list it in missing_fields; never guess. Put a field in low_confidence_fields when the document is ambiguous about it (for example, two different dates, an impossible date, a relative day like "by sunday", or a rate that might be per mile). An exact unit conversion is not ambiguous. In email threads, the most recent message wins when details change. Normalize dates to ISO 8601 and weights to pounds.`;
 
 const MAX_TOKENS = 2048;
 const RETRY_MAX_TOKENS = 8192;
