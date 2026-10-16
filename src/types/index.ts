@@ -1,4 +1,4 @@
-export type LoadStatus = "needs_review" | "approved" | "rejected";
+export type LoadStatus = "needs_review" | "approved" | "rejected" | "failed";
 export type SourceType = "email" | "pdf";
 export type EquipmentType =
   | "dry_van"

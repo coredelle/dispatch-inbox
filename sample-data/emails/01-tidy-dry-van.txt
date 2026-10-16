@@ -1,0 +1,25 @@
+From: Dana Whitfield <dana.whitfield@bluepinegoods.example>
+To: dispatch@ridgelinefreight.example
+Subject: Load request – Columbus, OH to Nashville, TN – PO 44817
+
+Hi team,
+
+Please quote and confirm the following load:
+
+Shipper: Blue Pine Goods Co.
+Pickup: 2150 Harmon Ave, Columbus, OH 43223
+Pickup window: November 4, 2026, 8:00 AM – 12:00 PM
+Delivery: 900 Fesslers Ln, Nashville, TN 37210
+Delivery window: November 5, 2026, 7:00 AM – 3:00 PM
+Commodity: Packaged paper goods (palletized, 22 pallets)
+Weight: 38,500 lbs
+Equipment: 53' dry van
+Rate: $1,450 all-in
+PO #: 44817
+
+Driver must check in at the guard shack. No touch freight.
+
+Thanks,
+Dana Whitfield
+Logistics Coordinator, Blue Pine Goods Co.
+(614) 555-0142

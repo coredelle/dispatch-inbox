@@ -1,0 +1,25 @@
+From: Priya Natarajan <priya@ironcreststeel.example>
+To: dispatch@ridgelinefreight.example
+Subject: Flatbed needed – Gary, IN → Louisville, KY (Order IC-5562)
+
+Hello,
+
+Details for our next steel shipment:
+
+- Shipper: Ironcrest Steel Supply
+- Origin: 7800 Industrial Hwy, Gary, IN 46406
+- Pickup: Monday, November 9, 2026, between 7:00 AM and 11:00 AM
+- Destination: 1205 River Park Dr, Louisville, KY 40211
+- Delivery: Tuesday, November 10, 2026, by 2:00 PM
+- Commodity: Steel coils (6 coils)
+- Weight: 44,000 lbs
+- Equipment: 48' flatbed, tarps and chains required
+- Rate: $1,875 including tarp fee
+- Order #: IC-5562
+
+Call me with any questions.
+
+Priya Natarajan
+Traffic Manager, Ironcrest Steel Supply
+priya@ironcreststeel.example
+(219) 555-0119

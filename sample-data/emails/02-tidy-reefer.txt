@@ -1,0 +1,24 @@
+From: Marco Reyes <mreyes@sunvalefarms.example>
+To: dispatch@ridgelinefreight.example
+Subject: Reefer load 11/6 – Fresno to Phoenix
+
+Good morning,
+
+We have a refrigerated load ready next week:
+
+Shipper: Sunvale Farms
+Pick up at: 4471 S Cedar Ave, Fresno, CA 93725
+Pickup date: 11/06/2026, appointment 6:00 AM
+Deliver to: Desert Market Distribution, 3320 W Lower Buckeye Rd, Phoenix, AZ 85009
+Delivery date: 11/07/2026, by 10:00 AM
+Product: Fresh table grapes
+Weight: 17,200 kg
+Equipment: 53' reefer, set to 34°F continuous
+Rate: $2,100 flat
+Reference: SVF-20931, BOL 778120
+
+Please send a confirmation when the truck is assigned.
+
+Marco Reyes
+Shipping Manager, Sunvale Farms
+mreyes@sunvalefarms.example | (559) 555-0187
