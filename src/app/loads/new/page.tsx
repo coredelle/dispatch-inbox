@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -34,6 +35,7 @@ export default function NewLoadPage() {
   const [result, setResult] = useState<ExtractResponse | null>(null);
   const [needsLogin, setNeedsLogin] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
   function pickFile(f: File | undefined) {
     setResult(null);
@@ -59,7 +61,14 @@ export default function NewLoadPage() {
       body: JSON.stringify(body),
     });
     if (res.status === 401) setNeedsLogin(true);
-    setResult(await res.json());
+    const data: ExtractResponse = await res.json();
+    // Successful extraction goes straight to the review screen
+    if (data.loadId && data.fields) {
+      setProgress("Opening review…");
+      router.push(`/loads/${data.loadId}`);
+      return;
+    }
+    setResult(data);
   }
 
   async function run(task: () => Promise<void>) {
@@ -183,6 +192,9 @@ export default function NewLoadPage() {
       {result && !needsLogin && (
         <section className="mt-8 space-y-3">
           {result.error && <p className="text-sm text-destructive">{result.error}</p>}
+          {result.loadId && (
+            <Link href={`/loads/${result.loadId}`} className="text-sm underline">View this load</Link>
+          )}
           {result.run && (
             <p className="text-sm text-muted-foreground">
               {result.run.model} · {result.run.inputTokens} in / {result.run.outputTokens} out ·{" "}
