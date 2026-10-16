@@ -2,27 +2,22 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
+/* Dark mode follows the viewer's system setting */
+@custom-variant dark (@media (prefers-color-scheme: dark));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
+  --font-sans: var(--font-public-sans);
+  --font-mono: var(--font-plex-mono);
+  --font-heading: var(--font-barlow);
+  --font-display: var(--font-barlow);
+  --color-hivis: var(--hivis);
+  --color-hivis-foreground: var(--hivis-foreground);
+  --color-flag-missing: var(--flag-missing);
+  --color-flag-missing-bg: var(--flag-missing-bg);
+  --color-flag-low: var(--flag-low);
+  --color-flag-low-bg: var(--flag-low-bg);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -48,73 +43,74 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* Ledger paper, carbon-navy ink, one hi-vis accent, rubber-stamp inks */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --background: #eceee7;
+  --foreground: #1c2733;
+  --card: #f8f9f4;
+  --card-foreground: #1c2733;
+  --popover: #f8f9f4;
+  --popover-foreground: #1c2733;
+  --primary: #1c2733;
+  --primary-foreground: #f8f9f4;
+  --secondary: #dfe3d8;
+  --secondary-foreground: #1c2733;
+  --muted: #e2e5dc;
+  --muted-foreground: #586370;
+  --accent: #dfe3d8;
+  --accent-foreground: #1c2733;
+  --destructive: #b3261e;
+  --border: #c6ccbf;
+  --input: #b4bcae;
+  --ring: #d99e00;
+  --radius: 0.3rem;
+
+  --hivis: #f2b705;
+  --hivis-foreground: #1c2733;
+  --flag-missing: #b3261e;
+  --flag-missing-bg: #fbe5e2;
+  --flag-low: #9a5b00;
+  --flag-low-bg: #fbefcf;
+  --stamp-approved: #2e7d4f;
+  --stamp-rejected: #b3261e;
+  --stamp-review: #2f4fa2;
+  --stamp-failed: #6b6f76;
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+/* Night shift: same paperwork, lights down */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #12171d;
+    --foreground: #e4e7df;
+    --card: #1a2129;
+    --card-foreground: #e4e7df;
+    --popover: #1a2129;
+    --popover-foreground: #e4e7df;
+    --primary: #e4e7df;
+    --primary-foreground: #12171d;
+    --secondary: #242c36;
+    --secondary-foreground: #e4e7df;
+    --muted: #20272f;
+    --muted-foreground: #9ba5b0;
+    --accent: #242c36;
+    --accent-foreground: #e4e7df;
+    --destructive: #ff7a6e;
+    --border: #2f3944;
+    --input: #3b4653;
+    --ring: #f5c542;
+
+    --hivis: #f5c542;
+    --hivis-foreground: #12171d;
+    --flag-missing: #ff8a7d;
+    --flag-missing-bg: #3a1d1b;
+    --flag-low: #f5c542;
+    --flag-low-bg: #352b12;
+    --stamp-approved: #6fcf8f;
+    --stamp-rejected: #ff7a6e;
+    --stamp-review: #8fa8f0;
+    --stamp-failed: #9aa0a8;
+    color-scheme: dark;
+  }
 }
 
 @layer base {
@@ -126,5 +122,137 @@
   }
   html {
     @apply font-sans;
+  }
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  /* Small uppercase form label, like the box captions on a bill of lading */
+  .eyebrow {
+    font-family: var(--font-plex-mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+
+  /* Condensed uppercase heading used for document titles */
+  .doc-title {
+    font-family: var(--font-barlow);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    line-height: 0.95;
+  }
+
+  /* A sheet of paper on the desk */
+  .sheet {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 1px 0 var(--border), 0 14px 28px -22px rgb(0 0 0 / 0.45);
+  }
+
+  /* Inked bar heading a form section */
+  .section-bar {
+    background: var(--foreground);
+    color: var(--background);
+    font-family: var(--font-barlow);
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+  }
+
+  /* Ruled form input */
+  .field-input {
+    height: 2.25rem;
+    width: 100%;
+    border: 1px solid var(--input);
+    border-radius: calc(var(--radius) * 0.6);
+    background: var(--card);
+    padding: 0 0.6rem;
+    font-family: var(--font-plex-mono);
+    font-size: 0.85rem;
+    outline: none;
+    transition: border-color 120ms, box-shadow 120ms;
+  }
+  .field-input:focus-visible {
+    border-color: var(--foreground);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--hivis) 45%, transparent);
+  }
+  .field-input:disabled {
+    opacity: 0.7;
+  }
+  .field-input[data-flag="missing"] {
+    border-color: var(--flag-missing);
+    background: var(--flag-missing-bg);
+  }
+  .field-input[data-flag="low"] {
+    border-color: var(--flag-low);
+    background: var(--flag-low-bg);
+  }
+
+  /* Highlighter pen over a phrase */
+  .marker {
+    background: linear-gradient(transparent 58%, color-mix(in oklab, var(--hivis) 60%, transparent) 58%);
+    padding-inline: 0.05em;
+  }
+
+  /* Tear-off line for carbon copies */
+  .perforated {
+    border-top: 2px dashed var(--border);
+  }
+
+  /* Rubber stamp: double-ruled ink box, slightly crooked */
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-barlow);
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 0.35em 0.6em 0.3em 0.74em;
+    border: 2px solid currentColor;
+    border-radius: 3px;
+    outline: 1px solid currentColor;
+    outline-offset: -5px;
+    transform: rotate(-4deg);
+    opacity: 0.9;
+    color: var(--stamp-review);
+  }
+  .stamp[data-status="approved"] { color: var(--stamp-approved); }
+  .stamp[data-status="rejected"] { color: var(--stamp-rejected); }
+  .stamp[data-status="failed"] { color: var(--stamp-failed); }
+  .stamp[data-status="missing"] { color: var(--flag-missing); }
+  .stamp-sm {
+    font-size: 0.68rem;
+    border-width: 1.5px;
+    outline-offset: -4px;
+    transform: rotate(-2deg);
+  }
+  .stamp-lg {
+    font-size: 1.6rem;
+    border-width: 3px;
+    outline-width: 1.5px;
+    outline-offset: -7px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .stamp-land {
+    animation: stamp-land 420ms cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+  }
+  @keyframes stamp-land {
+    0% { transform: scale(1.9) rotate(-14deg); opacity: 0; }
+    55% { transform: scale(0.92) rotate(-3deg); opacity: 1; }
+    100% { transform: scale(1) rotate(-4deg); opacity: 0.9; }
   }
 }

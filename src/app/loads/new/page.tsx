@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -117,17 +118,19 @@ export default function NewLoadPage() {
   const busy = progress !== null;
 
   return (
-    <main className="mx-auto max-w-3xl p-8">
-      <div className="flex items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold">New load</h1>
-        <Link href="/inbox" className="text-sm underline">← Inbox</Link>
-      </div>
-      <p className="mt-1 text-muted-foreground">Paste a load email or upload a rate confirmation.</p>
+    <div className="flex min-h-screen flex-col">
+      <SiteHeader>
+        <Link href="/inbox" className="underline-offset-4 hover:underline">← Load ledger</Link>
+      </SiteHeader>
+    <main className="mx-auto w-full max-w-3xl px-4 py-8 sm:px-6">
+      <span className="eyebrow">Intake</span>
+      <h1 className="doc-title text-5xl">New load</h1>
+      <p className="mt-2 text-muted-foreground">Paste a load email or drop in a rate confirmation. It takes a few seconds.</p>
 
       <Tabs defaultValue="email" className="mt-6">
-        <TabsList>
-          <TabsTrigger value="email">Paste email</TabsTrigger>
-          <TabsTrigger value="pdf">Upload PDF</TabsTrigger>
+        <TabsList variant="line" className="gap-4">
+          <TabsTrigger value="email" className="font-display text-lg font-semibold uppercase tracking-wide">Paste email</TabsTrigger>
+          <TabsTrigger value="pdf" className="font-display text-lg font-semibold uppercase tracking-wide">Upload PDF</TabsTrigger>
         </TabsList>
 
         <TabsContent value="email">
@@ -135,10 +138,10 @@ export default function NewLoadPage() {
             <Textarea
               value={text}
               onChange={(e) => setText(e.target.value)}
-              placeholder="Paste the email here…"
-              className="min-h-64 font-mono text-sm"
+              placeholder={"From: …\nSubject: Load request…\n\nPaste the whole email, signatures and replies included."}
+              className="sheet min-h-72 rounded-sm p-4 font-mono text-sm leading-relaxed"
             />
-            <Button type="submit" disabled={busy || !text.trim()} className="self-start">
+            <Button type="submit" disabled={busy || !text.trim()} className="self-start border border-foreground bg-hivis px-4 font-semibold text-hivis-foreground hover:bg-hivis/85">
               {progress ?? "Extract load"}
             </Button>
           </form>
@@ -162,14 +165,15 @@ export default function NewLoadPage() {
                 pickFile(e.dataTransfer.files[0]);
               }}
               className={cn(
-                "flex min-h-48 cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed p-6 text-center text-sm text-muted-foreground transition-colors",
-                dragging && "border-primary bg-muted",
+                "flex min-h-56 cursor-pointer flex-col items-center justify-center gap-2 rounded-sm border-2 border-dashed border-input bg-card p-6 text-center transition-colors focus-visible:border-foreground focus-visible:outline-none",
+                dragging && "border-foreground bg-hivis/15",
               )}
             >
+              <span className="doc-title text-3xl">{file ? "In the tray" : "In-tray"}</span>
               {file ? (
-                <span className="text-foreground">{file.name}</span>
+                <span className="font-mono text-sm">{file.name}</span>
               ) : (
-                <span>Drop a PDF here, or click to choose one (10 MB max)</span>
+                <span className="text-sm text-muted-foreground">Drop a PDF rate confirmation here, or click to choose one. 10 MB max.</span>
               )}
             </div>
             <input
@@ -179,7 +183,7 @@ export default function NewLoadPage() {
               className="hidden"
               onChange={(e) => pickFile(e.target.files?.[0])}
             />
-            <Button type="submit" disabled={busy || !file} className="self-start">
+            <Button type="submit" disabled={busy || !file} className="self-start border border-foreground bg-hivis px-4 font-semibold text-hivis-foreground hover:bg-hivis/85">
               {progress ?? "Extract load"}
             </Button>
           </form>
@@ -213,5 +217,6 @@ export default function NewLoadPage() {
         </section>
       )}
     </main>
+    </div>
   );
 }

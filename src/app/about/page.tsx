@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { connection } from "next/server";
+import { SiteHeader } from "@/components/site-header";
 import { getUsageStats } from "@/lib/stats";
 
 export const metadata: Metadata = { title: "About this demo · Dispatch Inbox" };
@@ -15,10 +16,10 @@ function cents(usd: number | null): string {
 
 function Stat({ label, value, note }: { label: string; value: string; note?: string }) {
   return (
-    <div className="rounded-lg border p-4">
-      <div className="text-sm text-muted-foreground">{label}</div>
-      <div className="mt-1 text-2xl font-semibold tabular-nums">{value}</div>
-      {note && <div className="mt-1 text-xs text-muted-foreground">{note}</div>}
+    <div className="flex flex-col gap-1 bg-card p-4">
+      <div className="eyebrow">{label}</div>
+      <div className="doc-title text-5xl tabular-nums">{value}</div>
+      {note && <div className="text-xs text-muted-foreground">{note}</div>}
     </div>
   );
 }
@@ -29,15 +30,19 @@ export default async function AboutPage() {
   const stats = await getUsageStats();
 
   return (
-    <main className="mx-auto w-full max-w-3xl p-6 sm:p-10">
-      <Link href="/" className="text-sm underline">← Dispatch Inbox</Link>
-      <h1 className="mt-4 text-3xl font-bold">About this demo</h1>
+    <div className="flex min-h-screen flex-col">
+    <SiteHeader>
+      <Link href="/inbox" className="underline-offset-4 hover:underline">Load ledger</Link>
+    </SiteHeader>
+    <main className="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6">
+      <span className="eyebrow">Spec sheet</span>
+      <h1 className="doc-title text-5xl">About this demo</h1>
       <p className="mt-2 text-muted-foreground">
         Dispatch Inbox turns messy load emails and rate confirmations into clean, reviewable load
         records. It&apos;s a weekend MVP showing how an AI step fits into a real workflow.
       </p>
 
-      <h2 className="mt-10 text-lg font-semibold">How it works</h2>
+      <h2 className="doc-title mt-10 border-b-2 border-foreground pb-1 text-2xl">How it works</h2>
       <ul className="mt-3 list-disc space-y-2 pl-5">
         <li>
           <strong>Extract.</strong> Paste an email or drop in a PDF. {stats.extractionModel} reads it
@@ -56,11 +61,11 @@ export default async function AboutPage() {
         </li>
       </ul>
 
-      <h2 className="mt-10 text-lg font-semibold">What it costs</h2>
+      <h2 className="doc-title mt-10 border-b-2 border-foreground pb-1 text-2xl">What it costs</h2>
       <p className="mt-1 text-sm text-muted-foreground">
         Live averages from every extraction this demo has run, using published per-token prices.
       </p>
-      <div className="mt-4 grid gap-3 sm:grid-cols-3">
+      <div className="sheet mt-4 grid gap-px overflow-hidden bg-border sm:grid-cols-3">
         <Stat label="Average cost per load" value={cents(stats.avgCostPerLoad)} note="extraction + follow-up draft" />
         <Stat
           label="Average extraction time"
@@ -73,7 +78,7 @@ export default async function AboutPage() {
         draft {cents(stats.avgFollowupCost)} on {stats.followupModel}.
       </p>
 
-      <h2 className="mt-10 text-lg font-semibold">Built with</h2>
+      <h2 className="doc-title mt-10 border-b-2 border-foreground pb-1 text-2xl">Built with</h2>
       <p className="mt-2 text-sm">
         Next.js, TypeScript, Tailwind and shadcn/ui · Supabase (Postgres with row-level security,
         magic-link auth, file storage) · Anthropic API with structured outputs · Vercel.
@@ -87,5 +92,6 @@ export default async function AboutPage() {
         </a>
       </p>
     </main>
+    </div>
   );
 }

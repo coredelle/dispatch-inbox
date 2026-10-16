@@ -1,5 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import { connection } from "next/server";
+import Link from "next/link";
+import { SiteHeader } from "@/components/site-header";
 import { createClient } from "@/lib/supabase/server";
 import type { Load } from "@/types";
 import { ReviewForm } from "./review-form";
@@ -37,20 +39,24 @@ export default async function ReviewPage({ params }: PageProps<"/loads/[id]">) {
     .maybeSingle();
 
   return (
-    <main className="mx-auto grid w-full max-w-7xl gap-6 p-6 lg:grid-cols-2">
-      <section className="flex flex-col gap-2">
-        <h2 className="text-sm font-medium text-muted-foreground">
-          Source ({load.source_type === "pdf" ? "PDF" : "email"})
-        </h2>
-        {pdfUrl ? (
-          <iframe src={pdfUrl} title="Source PDF" className="h-[80vh] w-full rounded-lg border" />
-        ) : (
-          <pre className="h-[80vh] overflow-auto whitespace-pre-wrap rounded-lg border bg-muted p-4 text-sm">
-            {load.source_text ?? "No source available."}
-          </pre>
-        )}
-      </section>
-      <ReviewForm load={load} extractionError={run?.error ?? null} />
-    </main>
+    <div className="flex min-h-screen flex-col">
+      <SiteHeader>
+        <Link href="/inbox" className="underline-offset-4 hover:underline">← Load ledger</Link>
+        <Link href="/loads/new" className="underline-offset-4 hover:underline">New load</Link>
+      </SiteHeader>
+      <main className="mx-auto grid w-full max-w-7xl gap-8 px-4 py-8 sm:px-6 lg:grid-cols-2">
+        <section className="flex min-w-0 flex-col gap-2 lg:sticky lg:top-6 lg:self-start">
+          <span className="eyebrow">Source document · {load.source_type === "pdf" ? "PDF rate confirmation" : "email"}</span>
+          {pdfUrl ? (
+            <iframe src={pdfUrl} title="Source PDF" className="sheet h-[45vh] lg:h-[78vh] w-full" />
+          ) : (
+            <pre className="sheet h-[45vh] lg:h-[78vh] overflow-auto whitespace-pre-wrap p-5 font-mono text-sm leading-relaxed">
+              {load.source_text ?? "No source available."}
+            </pre>
+          )}
+        </section>
+        <ReviewForm load={load} extractionError={run?.error ?? null} />
+      </main>
+    </div>
   );
 }

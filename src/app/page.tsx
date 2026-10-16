@@ -1,42 +1,51 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import { SiteHeader } from "@/components/site-header";
+import { Stamp } from "@/components/stamp";
 import { cn } from "@/lib/utils";
 
-const PREVIEW_FIELDS: { label: string; value: string; flag?: "missing" | "low" }[] = [
-  { label: "Lane", value: "Allentown, PA → Richmond, VA" },
-  { label: "Pickup", value: "Nov 19, 7:00 AM – 1:00 PM" },
-  { label: "Delivery", value: "Not given", flag: "missing" },
-  { label: "Weight", value: "31,000 lbs · 53' dry van" },
-  { label: "Rate", value: "Not given", flag: "missing" },
+const PREVIEW_ROWS: { label: string; value: string; missing?: boolean }[] = [
+  { label: "Shipper", value: "Keystone Packaging" },
+  { label: "Pickup", value: "Allentown, PA · 11/19 07:00–13:00" },
+  { label: "Delivery", value: "Richmond, VA", missing: true },
+  { label: "Freight", value: "26 plt corrugated · 31,000 lb" },
+  { label: "Equipment", value: "53' dry van" },
+  { label: "Rate", value: "—", missing: true },
+  { label: "Ref", value: "KP-30118" },
 ];
 
-// Static illustration of the product flow: email in, fields out, follow-up drafted
-function ProductPreview() {
+const STEPS = [
+  { title: "Paste or drop", body: "A load email or a PDF rate confirmation." },
+  { title: "Review the flags", body: "Missing fields in red, unclear ones in amber." },
+  { title: "Approve and follow up", body: "Copy the drafted email asking for what's missing." },
+];
+
+// Static illustration: a load record as a paper form, with the follow-up as its carbon copy
+function LoadRecordPreview() {
   return (
-    <div className="w-full max-w-md rounded-xl border bg-card p-4 text-left text-sm shadow-sm" aria-hidden="true">
-      <div className="rounded-lg bg-muted p-3 font-mono text-xs leading-relaxed text-muted-foreground">
-        Need a truck for Thursday 11/19. Pickup at our Allentown plant, 7am–1pm. Going to Tidewater
-        Supply, Richmond VA. 26 pallets, about 31,000 lbs. 53&apos; dry van…
+    <div className="sheet relative w-full max-w-md p-5" aria-hidden="true">
+      <div className="flex items-end justify-between gap-4 border-b-2 border-foreground pb-2">
+        <span className="doc-title text-2xl">Load record</span>
+        <span className="font-mono text-xs text-muted-foreground">№ KP-30118</span>
       </div>
-      <div className="my-2 text-center text-muted-foreground">↓</div>
-      <dl className="divide-y rounded-lg border">
-        {PREVIEW_FIELDS.map((f) => (
-          <div
-            key={f.label}
-            className={cn(
-              "flex justify-between gap-4 px-3 py-2",
-              f.flag === "missing" && "bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-300",
-            )}
-          >
-            <dt className="text-muted-foreground">{f.label}</dt>
-            <dd className="font-medium">{f.value}</dd>
+      <Stamp status="needs_review" className="absolute -top-4 right-24 bg-card" />
+      <dl className="mt-3 divide-y divide-border">
+        {PREVIEW_ROWS.map((row) => (
+          <div key={row.label} className="flex items-center justify-between gap-4 py-1.5">
+            <dt className="eyebrow">{row.label}</dt>
+            <dd className="flex items-center gap-2 font-mono text-sm">
+              {row.value}
+              {row.missing && <span data-status="missing" className="stamp stamp-sm">Missing</span>}
+            </dd>
           </div>
         ))}
       </dl>
-      <div className="mt-3 rounded-lg border border-dashed p-3 text-xs leading-relaxed">
-        <div className="mb-1 font-medium">Drafted follow-up</div>
-        Hi Tom, thanks for the Allentown to Richmond load (ref KP-30118). Could you send the rate and
-        the delivery date and time? Once I have those I&apos;ll confirm the truck.
+      <div className="perforated mt-4 pt-3">
+        <div className="eyebrow mb-1">Carbon copy · drafted follow-up</div>
+        <p className="font-mono text-xs leading-relaxed text-muted-foreground">
+          Hi Tom, thanks for the Allentown to Richmond load (KP-30118). Could you send the rate and the
+          delivery date and time? Once I have those I&apos;ll confirm the truck.
+        </p>
       </div>
     </div>
   );
@@ -45,42 +54,59 @@ function ProductPreview() {
 export default function LandingPage() {
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="mx-auto flex w-full max-w-6xl items-center justify-between p-6">
-        <span className="font-semibold">Dispatch Inbox</span>
-        <nav className="flex gap-4 text-sm">
-          <Link href="/about" className="underline-offset-4 hover:underline">About this demo</Link>
-          <Link href="/login" className="underline-offset-4 hover:underline">Sign in</Link>
-        </nav>
-      </header>
+      <SiteHeader>
+        <Link href="/about" className="underline-offset-4 hover:underline">About this demo</Link>
+        <Link href="/login" className="underline-offset-4 hover:underline">Sign in</Link>
+      </SiteHeader>
 
-      <main className="mx-auto grid w-full max-w-6xl flex-1 items-center gap-12 p-6 lg:grid-cols-2">
+      <main className="mx-auto grid w-full max-w-6xl flex-1 items-center gap-12 px-4 py-12 sm:px-6 lg:grid-cols-[1.1fr_1fr]">
         <div className="flex flex-col gap-6">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            Load emails in. Clean load records out.
+          <span className="eyebrow">Freight load intake · AI-assisted</span>
+          <h1 className="doc-title text-5xl sm:text-7xl">
+            Load emails in.
+            <br />
+            <span className="marker">Clean load records</span> out.
           </h1>
           <p className="max-w-lg text-lg text-muted-foreground">
-            Paste a load email or drop in a rate confirmation PDF. AI extracts the details, flags
-            what&apos;s missing, and drafts the follow-up. You review and approve every load.
+            Paste a load email or drop in a rate confirmation PDF. AI pulls out the details, flags
+            what&apos;s missing, and drafts the follow-up. A person approves every load.
           </p>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             {/* Plain form post: signs into the shared demo account, no signup */}
             <form action="/api/demo/login" method="post">
-              <button type="submit" className={cn(buttonVariants({ size: "lg" }))}>
+              <button
+                type="submit"
+                className={cn(
+                  buttonVariants({ size: "lg" }),
+                  "h-11 border border-foreground bg-hivis px-5 text-base font-semibold text-hivis-foreground hover:bg-hivis/85",
+                )}
+              >
                 Try the demo
               </button>
             </form>
-            <Link href="/login" className={cn(buttonVariants({ variant: "outline", size: "lg" }))}>
+            <Link href="/login" className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-11 px-5 text-base")}>
               Sign in
             </Link>
+            <span className="text-sm text-muted-foreground">No signup. About a cent per load.</span>
           </div>
-          <p className="text-sm text-muted-foreground">No signup needed for the demo. About a cent per load.</p>
+
+          <ol className="mt-4 grid gap-px overflow-hidden rounded-[var(--radius)] border bg-border sm:grid-cols-3">
+            {STEPS.map((step, i) => (
+              <li key={step.title} className="flex flex-col gap-1 bg-card p-3">
+                <span className="font-mono text-xs text-muted-foreground">Step {i + 1}</span>
+                <span className="doc-title text-lg">{step.title}</span>
+                <span className="text-sm text-muted-foreground">{step.body}</span>
+              </li>
+            ))}
+          </ol>
         </div>
+
         <div className="flex justify-center lg:justify-end">
-          <ProductPreview />
+          <LoadRecordPreview />
         </div>
       </main>
 
-      <footer className="p-6 text-center text-sm text-muted-foreground">
+      <footer className="border-t px-4 py-6 text-center text-sm text-muted-foreground">
         Built by{" "}
         <a href="https://coredellesmith.com" className="underline" target="_blank" rel="noreferrer">
           Coredelle Digital
