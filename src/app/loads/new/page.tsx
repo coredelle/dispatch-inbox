@@ -118,7 +118,10 @@ export default function NewLoadPage() {
 
   return (
     <main className="mx-auto max-w-3xl p-8">
-      <h1 className="text-2xl font-bold">New load</h1>
+      <div className="flex items-center justify-between gap-4">
+        <h1 className="text-2xl font-bold">New load</h1>
+        <Link href="/inbox" className="text-sm underline">← Inbox</Link>
+      </div>
       <p className="mt-1 text-muted-foreground">Paste a load email or upload a rate confirmation.</p>
 
       <Tabs defaultValue="email" className="mt-6">

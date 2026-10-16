@@ -1,4 +1,5 @@
 import { notFound, redirect } from "next/navigation";
+import { connection } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import type { Load } from "@/types";
 import { ReviewForm } from "./review-form";
@@ -7,6 +8,8 @@ const SIGNED_URL_SECONDS = 60 * 60;
 
 export default async function ReviewPage({ params }: PageProps<"/loads/[id]">) {
   const { id } = await params;
+  // Always render per request: this page reads the signed-in user's data
+  await connection();
   const supabase = await createClient();
   const {
     data: { user },

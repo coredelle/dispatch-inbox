@@ -1,4 +1,4 @@
-import type { EquipmentType, LoadFields } from "@/types";
+import type { EquipmentType, LoadFields, LoadStatus } from "@/types";
 
 export const EQUIPMENT_TYPES: EquipmentType[] = [
   "dry_van", "reefer", "flatbed", "step_deck", "power_only", "other", "unknown",
@@ -88,4 +88,28 @@ export function computeMissing(f: LoadFields): string[] {
 export function isFlagged(list: string[], path: string, group?: string): boolean {
   const section = path.split(".")[0];
   return list.some((k) => k === path || k === group || k === section);
+}
+
+export const STATUS_LABELS: Record<LoadStatus, string> = {
+  needs_review: "Needs review",
+  approved: "Approved",
+  rejected: "Rejected",
+  failed: "Failed",
+};
+
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+// Formats the model's ISO strings as written, with no timezone conversion
+export function formatDateTime(iso: string | null): string {
+  const m = iso?.match(/^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}))?/);
+  if (!m) return iso ?? "—";
+  const [, year, month, day, hh, mm] = m;
+  const date = `${MONTHS[Number(month) - 1]} ${Number(day)}, ${year}`;
+  if (!hh) return date;
+  const h = Number(hh);
+  return `${date}, ${h % 12 || 12}:${mm} ${h < 12 ? "AM" : "PM"}`;
+}
+
+export function formatUsd(n: number | null): string {
+  return n === null ? "—" : n.toLocaleString("en-US", { style: "currency", currency: "USD" });
 }

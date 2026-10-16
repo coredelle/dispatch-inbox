@@ -5,16 +5,9 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { EQUIPMENT_TYPES, MISSING_FIELD_LABELS, computeMissing, isFlagged, normalizeFields } from "@/lib/loads";
+import { EQUIPMENT_TYPES, MISSING_FIELD_LABELS, STATUS_LABELS, computeMissing, isFlagged, normalizeFields } from "@/lib/loads";
 import { cn } from "@/lib/utils";
 import type { Load, LoadFields, LoadStatus } from "@/types";
-
-const STATUS_LABELS: Record<LoadStatus, string> = {
-  needs_review: "Needs review",
-  approved: "Approved",
-  rejected: "Rejected",
-  failed: "Failed",
-};
 
 const inputClass =
   "h-9 w-full rounded-lg border border-input bg-transparent px-3 text-sm outline-none focus-visible:border-ring disabled:opacity-60";
@@ -121,7 +114,7 @@ export function ReviewForm({ load, extractionError }: { load: Load; extractionEr
             {STATUS_LABELS[status]}
           </Badge>
         </div>
-        <Link href="/loads/new" className="text-sm underline">New load</Link>
+        <Link href="/inbox" className="text-sm underline">← Inbox</Link>
       </div>
 
       {!fields ? (
