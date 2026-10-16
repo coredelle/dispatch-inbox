@@ -1,0 +1,333 @@
+[
+  {
+    "status": "approved",
+    "source_type": "email",
+    "source_text": "From: Dana Whitfield <dana.whitfield@bluepinegoods.example>\nTo: dispatch@ridgelinefreight.example\nSubject: Load request – Columbus, OH to Nashville, TN – PO 44817\n\nHi team,\n\nPlease quote and confirm the following load:\n\nShipper: Blue Pine Goods Co.\nPickup: 2150 Harmon Ave, Columbus, OH 43223\nPickup window: November 4, 2026, 8:00 AM – 12:00 PM\nDelivery: 900 Fesslers Ln, Nashville, TN 37210\nDelivery window: November 5, 2026, 7:00 AM – 3:00 PM\nCommodity: Packaged paper goods (palletized, 22 pallets)\nWeight: 38,500 lbs\nEquipment: 53' dry van\nRate: $1,450 all-in\nPO #: 44817\n\nDriver must check in at the guard shack. No touch freight.\n\nThanks,\nDana Whitfield\nLogistics Coordinator, Blue Pine Goods Co.\n(614) 555-0142",
+    "source_pdf": null,
+    "extracted": {
+      "pickup": {
+        "latest": "2026-11-04T12:00:00",
+        "earliest": "2026-11-04T08:00:00",
+        "location": "2150 Harmon Ave, Columbus, OH 43223"
+      },
+      "contact": {
+        "name": "Dana Whitfield",
+        "email": "dana.whitfield@bluepinegoods.example",
+        "phone": "(614) 555-0142"
+      },
+      "delivery": {
+        "latest": "2026-11-05T15:00:00",
+        "earliest": "2026-11-05T07:00:00",
+        "location": "900 Fesslers Ln, Nashville, TN 37210"
+      },
+      "rate_usd": 1450,
+      "commodity": "Packaged paper goods (palletized, 22 pallets)",
+      "weight_lbs": 38500,
+      "shipper_name": "Blue Pine Goods Co.",
+      "equipment_type": "dry_van",
+      "missing_fields": [],
+      "reference_numbers": [
+        "44817"
+      ],
+      "special_instructions": "Driver must check in at the guard shack. No touch freight.",
+      "low_confidence_fields": []
+    },
+    "fields": {
+      "pickup": {
+        "latest": "2026-11-04T12:00:00",
+        "earliest": "2026-11-04T08:00:00",
+        "location": "2150 Harmon Ave, Columbus, OH 43223"
+      },
+      "contact": {
+        "name": "Dana Whitfield",
+        "email": "dana.whitfield@bluepinegoods.example",
+        "phone": "(614) 555-0142"
+      },
+      "delivery": {
+        "latest": "2026-11-05T15:00:00",
+        "earliest": "2026-11-05T07:00:00",
+        "location": "900 Fesslers Ln, Nashville, TN 37210"
+      },
+      "rate_usd": 1450,
+      "commodity": "Packaged paper goods (palletized, 22 pallets)",
+      "weight_lbs": 38500,
+      "shipper_name": "Blue Pine Goods Co.",
+      "equipment_type": "dry_van",
+      "missing_fields": [],
+      "reference_numbers": [
+        "44817"
+      ],
+      "special_instructions": "Driver must check in at the guard shack. No touch freight.",
+      "low_confidence_fields": []
+    },
+    "low_confidence_fields": [],
+    "followup_draft": null,
+    "runs": [
+      {
+        "error": null,
+        "model": "claude-sonnet-5-5",
+        "latency_ms": 3378,
+        "stop_reason": "end_turn",
+        "est_cost_usd": 0.006904,
+        "input_tokens": 1792,
+        "output_tokens": 332
+      }
+    ]
+  },
+  {
+    "status": "needs_review",
+    "source_type": "email",
+    "source_text": "From: Priya Natarajan <priya@ironcreststeel.example>\nTo: dispatch@ridgelinefreight.example\nSubject: Flatbed needed – Gary, IN → Louisville, KY (Order IC-5562)\n\nHello,\n\nDetails for our next steel shipment:\n\n- Shipper: Ironcrest Steel Supply\n- Origin: 7800 Industrial Hwy, Gary, IN 46406\n- Pickup: Monday, November 9, 2026, between 7:00 AM and 11:00 AM\n- Destination: 1205 River Park Dr, Louisville, KY 40211\n- Delivery: Tuesday, November 10, 2026, by 2:00 PM\n- Commodity: Steel coils (6 coils)\n- Weight: 44,000 lbs\n- Equipment: 48' flatbed, tarps and chains required\n- Rate: $1,875 including tarp fee\n- Order #: IC-5562\n\nCall me with any questions.\n\nPriya Natarajan\nTraffic Manager, Ironcrest Steel Supply\npriya@ironcreststeel.example\n(219) 555-0119",
+    "source_pdf": null,
+    "extracted": {
+      "pickup": {
+        "latest": "2026-11-09T11:00:00",
+        "earliest": "2026-11-09T07:00:00",
+        "location": "7800 Industrial Hwy, Gary, IN 46406"
+      },
+      "contact": {
+        "name": "Priya Natarajan",
+        "email": "priya@ironcreststeel.example",
+        "phone": "(219) 555-0119"
+      },
+      "delivery": {
+        "latest": "2026-11-10T14:00:00",
+        "earliest": null,
+        "location": "1205 River Park Dr, Louisville, KY 40211"
+      },
+      "rate_usd": 1875,
+      "commodity": "Steel coils (6 coils)",
+      "weight_lbs": 44000,
+      "shipper_name": "Ironcrest Steel Supply",
+      "equipment_type": "flatbed",
+      "missing_fields": [],
+      "reference_numbers": [
+        "IC-5562"
+      ],
+      "special_instructions": "48' flatbed, tarps and chains required. Rate includes tarp fee.",
+      "low_confidence_fields": []
+    },
+    "fields": {
+      "pickup": {
+        "latest": "2026-11-09T11:00:00",
+        "earliest": "2026-11-09T07:00:00",
+        "location": "7800 Industrial Hwy, Gary, IN 46406"
+      },
+      "contact": {
+        "name": "Priya Natarajan",
+        "email": "priya@ironcreststeel.example",
+        "phone": "(219) 555-0119"
+      },
+      "delivery": {
+        "latest": "2026-11-10T14:00:00",
+        "earliest": null,
+        "location": "1205 River Park Dr, Louisville, KY 40211"
+      },
+      "rate_usd": 1875,
+      "commodity": "Steel coils (6 coils)",
+      "weight_lbs": 44000,
+      "shipper_name": "Ironcrest Steel Supply",
+      "equipment_type": "flatbed",
+      "missing_fields": [],
+      "reference_numbers": [
+        "IC-5562"
+      ],
+      "special_instructions": "48' flatbed, tarps and chains required. Rate includes tarp fee.",
+      "low_confidence_fields": []
+    },
+    "low_confidence_fields": [],
+    "followup_draft": null,
+    "runs": [
+      {
+        "error": null,
+        "model": "claude-sonnet-5-5",
+        "latency_ms": 2661,
+        "stop_reason": "end_turn",
+        "est_cost_usd": 0.006758,
+        "input_tokens": 1799,
+        "output_tokens": 316
+      }
+    ]
+  },
+  {
+    "status": "needs_review",
+    "source_type": "pdf",
+    "source_text": null,
+    "source_pdf": "ratecon-01-dry-van.pdf",
+    "extracted": {
+      "pickup": {
+        "latest": "2026-11-12T13:00",
+        "earliest": "2026-11-12T09:00",
+        "location": "2875 Fulton Industrial Blvd SW, Atlanta, GA 30336"
+      },
+      "contact": {
+        "name": "Jordan Ellis",
+        "email": "jellis@harborviewlogistics.example",
+        "phone": "(912) 555-0163"
+      },
+      "delivery": {
+        "latest": "2026-11-13T16:00",
+        "earliest": "2026-11-13T08:00",
+        "location": "5100 Westinghouse Blvd, Charlotte, NC 28273"
+      },
+      "rate_usd": 1325,
+      "commodity": "Boxed furniture (sofas, chairs), 18 pallets",
+      "weight_lbs": 24300,
+      "shipper_name": "Magnolia Home Furnishings DC",
+      "equipment_type": "dry_van",
+      "missing_fields": [],
+      "reference_numbers": [
+        "HVL-208841",
+        "PU# MHF-77120",
+        "DEL# CCR-4409"
+      ],
+      "special_instructions": "Load bars required. Driver must call Harborview dispatch on arrival at each stop. Blanket-wrapped items: do not double stack.",
+      "low_confidence_fields": [
+        "shipper_name"
+      ]
+    },
+    "fields": {
+      "pickup": {
+        "latest": "2026-11-12T13:00",
+        "earliest": "2026-11-12T09:00",
+        "location": "2875 Fulton Industrial Blvd SW, Atlanta, GA 30336"
+      },
+      "contact": {
+        "name": "Jordan Ellis",
+        "email": "jellis@harborviewlogistics.example",
+        "phone": "(912) 555-0163"
+      },
+      "delivery": {
+        "latest": "2026-11-13T16:00",
+        "earliest": "2026-11-13T08:00",
+        "location": "5100 Westinghouse Blvd, Charlotte, NC 28273"
+      },
+      "rate_usd": 1325,
+      "commodity": "Boxed furniture (sofas, chairs), 18 pallets",
+      "weight_lbs": 24300,
+      "shipper_name": "Magnolia Home Furnishings DC",
+      "equipment_type": "dry_van",
+      "missing_fields": [],
+      "reference_numbers": [
+        "HVL-208841",
+        "PU# MHF-77120",
+        "DEL# CCR-4409"
+      ],
+      "special_instructions": "Load bars required. Driver must call Harborview dispatch on arrival at each stop. Blanket-wrapped items: do not double stack.",
+      "low_confidence_fields": [
+        "shipper_name"
+      ]
+    },
+    "low_confidence_fields": [
+      "shipper_name"
+    ],
+    "followup_draft": null,
+    "runs": [
+      {
+        "error": null,
+        "model": "claude-sonnet-5-5",
+        "latency_ms": 3498,
+        "stop_reason": "end_turn",
+        "est_cost_usd": 0.011166,
+        "input_tokens": 3613,
+        "output_tokens": 394
+      }
+    ]
+  },
+  {
+    "status": "needs_review",
+    "source_type": "email",
+    "source_text": "From: Tom Brandt <tbrandt@keystonepackaging.example>\nTo: dispatch@ridgelinefreight.example\nSubject: Truck needed Thursday – Allentown PA to Richmond VA\n\nHi,\n\nNeed a truck for Thursday 11/19/2026. Pickup at our Allentown plant,\n1650 Union Blvd, Allentown, PA 18109, anytime 7am-1pm.\n\nGoing to Tidewater Supply, 2400 Deepwater Terminal Rd, Richmond, VA 23234.\n\n26 pallets of corrugated boxes, about 31,000 lbs. 53' dry van.\nOur ref is KP-30118.\n\nLet me know if you can cover it.\n\nTom Brandt\nKeystone Packaging\n(610) 555-0177",
+    "source_pdf": null,
+    "extracted": {
+      "pickup": {
+        "latest": "2026-11-19T13:00",
+        "earliest": "2026-11-19T07:00",
+        "location": "1650 Union Blvd, Allentown, PA 18109"
+      },
+      "contact": {
+        "name": "Tom Brandt",
+        "email": "tbrandt@keystonepackaging.example",
+        "phone": "(610) 555-0177"
+      },
+      "delivery": {
+        "latest": null,
+        "earliest": null,
+        "location": "Tidewater Supply, 2400 Deepwater Terminal Rd, Richmond, VA 23234"
+      },
+      "rate_usd": null,
+      "commodity": "26 pallets of corrugated boxes",
+      "weight_lbs": 31000,
+      "shipper_name": "Keystone Packaging",
+      "equipment_type": "dry_van",
+      "missing_fields": [
+        "delivery.date",
+        "rate_usd"
+      ],
+      "reference_numbers": [
+        "KP-30118"
+      ],
+      "special_instructions": null,
+      "low_confidence_fields": [
+        "weight_lbs"
+      ]
+    },
+    "fields": {
+      "pickup": {
+        "latest": "2026-11-19T13:00",
+        "earliest": "2026-11-19T07:00",
+        "location": "1650 Union Blvd, Allentown, PA 18109"
+      },
+      "contact": {
+        "name": "Tom Brandt",
+        "email": "tbrandt@keystonepackaging.example",
+        "phone": "(610) 555-0177"
+      },
+      "delivery": {
+        "latest": null,
+        "earliest": null,
+        "location": "Tidewater Supply, 2400 Deepwater Terminal Rd, Richmond, VA 23234"
+      },
+      "rate_usd": null,
+      "commodity": "26 pallets of corrugated boxes",
+      "weight_lbs": 31000,
+      "shipper_name": "Keystone Packaging",
+      "equipment_type": "dry_van",
+      "missing_fields": [
+        "delivery.date",
+        "rate_usd"
+      ],
+      "reference_numbers": [
+        "KP-30118"
+      ],
+      "special_instructions": null,
+      "low_confidence_fields": [
+        "weight_lbs"
+      ]
+    },
+    "low_confidence_fields": [
+      "weight_lbs"
+    ],
+    "followup_draft": "Hi Tom,\n\nI'm following up on shipment KP-30118 from Keystone Packaging, moving from 1650 Union Blvd, Allentown, PA 18109 to Tidewater Supply at 2400 Deepwater Terminal Rd, Richmond, VA 23234. To finalize the booking, could you please confirm the delivery date and time, and the rate for this load? Once I have those, I can get everything set up on our end. Thank you for your help.\n\nThanks,",
+    "runs": [
+      {
+        "error": null,
+        "model": "claude-sonnet-5-5",
+        "latency_ms": 3068,
+        "stop_reason": "end_turn",
+        "est_cost_usd": 0.006446,
+        "input_tokens": 1688,
+        "output_tokens": 307
+      },
+      {
+        "error": null,
+        "model": "claude-haiku-5-5",
+        "latency_ms": 1256,
+        "stop_reason": "end_turn",
+        "est_cost_usd": 0.000105,
+        "input_tokens": 251,
+        "output_tokens": 159
+      }
+    ]
+  }
+]

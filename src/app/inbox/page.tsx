@@ -5,7 +5,9 @@ import { createClient } from "@/lib/supabase/server";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { isDemoUser } from "@/lib/demo";
 import { STATUS_LABELS, formatDateTime, formatUsd } from "@/lib/loads";
+import { ResetDemoButton } from "./reset-demo-button";
 import { cn } from "@/lib/utils";
 import type { Load, LoadStatus } from "@/types";
 
@@ -56,6 +58,16 @@ export default async function InboxPage({ searchParams }: PageProps<"/inbox">) {
         <h1 className="text-2xl font-bold">Inbox</h1>
         <Link href="/loads/new" className={cn(buttonVariants())}>New load</Link>
       </div>
+
+      {isDemoUser(user) && (
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-lg border bg-muted/50 p-3 text-sm">
+          <p>
+            You&apos;re in the shared demo account. Anything you add is visible to other visitors, and
+            AI requests are limited to 20 per hour.
+          </p>
+          <ResetDemoButton />
+        </div>
+      )}
 
       <nav className="mt-4 flex flex-wrap gap-2" aria-label="Filter by status">
         {FILTERS.map((f) => (

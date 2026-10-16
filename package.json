@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "demo:create-user": "node --env-file=.env.local scripts/create-demo-user.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.134.0",

@@ -11,9 +11,12 @@ export default function LandingPage() {
         details, flags what&apos;s missing, and drafts the follow-up.
       </p>
       <div className="flex gap-4">
-        <Link href="/inbox" className={cn(buttonVariants())}>
-          Try the demo
-        </Link>
+        {/* Plain form post: signs into the shared demo account, no signup */}
+        <form action="/api/demo/login" method="post">
+          <button type="submit" className={cn(buttonVariants())}>
+            Try the demo
+          </button>
+        </form>
         <Link href="/login" className={cn(buttonVariants({ variant: "outline" }))}>
           Sign in
         </Link>

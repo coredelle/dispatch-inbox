@@ -4,6 +4,7 @@ import { extractFromEmail, extractFromPdf, type ExtractionOutcome } from "@/lib/
 import { draftFollowup } from "@/lib/anthropic/followup";
 import { computeMissing, normalizeFields } from "@/lib/loads";
 import { logRun } from "@/lib/runs";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 // Give the Claude call room to finish on Vercel
 export const maxDuration = 60;
@@ -58,6 +59,11 @@ export async function POST(request: Request) {
     runExtraction = () => extractFromEmail(text);
   } else {
     return NextResponse.json({ error: "Paste an email or upload a PDF first." }, { status: 400 });
+  }
+
+  const limited = await checkRateLimit(supabase, user, "extract");
+  if (limited) {
+    return NextResponse.json({ error: limited }, { status: 429 });
   }
 
   const { data: load, error: insertError } = await supabase

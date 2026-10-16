@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { draftFollowup } from "@/lib/anthropic/followup";
 import { computeMissing, normalizeFields } from "@/lib/loads";
 import { logRun } from "@/lib/runs";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 // Redraft the follow-up email from the load's current (possibly edited) fields
 export async function POST(_request: Request, ctx: RouteContext<"/api/loads/[id]/followup">) {
@@ -26,6 +27,11 @@ export async function POST(_request: Request, ctx: RouteContext<"/api/loads/[id]
   if (missing.length === 0) {
     await supabase.from("loads").update({ followup_draft: null }).eq("id", id);
     return NextResponse.json({ draft: null, missing });
+  }
+
+  const limited = await checkRateLimit(supabase, user, "followup");
+  if (limited) {
+    return NextResponse.json({ error: limited }, { status: 429 });
   }
 
   const followup = await draftFollowup(fields, missing);
