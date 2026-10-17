@@ -108,7 +108,7 @@ export default function LandingPage() {
 
       <footer className="border-t px-4 py-6 text-center text-sm text-muted-foreground">
         Built by{" "}
-        <a href="https://coredellesmith.com" className="underline" target="_blank" rel="noreferrer">
+        <a href="https://coredelle.com" className="underline" target="_blank" rel="noreferrer">
           Coredelle Digital
         </a>
       </footer>

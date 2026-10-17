@@ -87,7 +87,7 @@ export default async function AboutPage() {
         <a href={REPO_URL} className="underline" target="_blank" rel="noreferrer">Source code on GitHub</a>
         {" · "}
         Built by{" "}
-        <a href="https://coredellesmith.com" className="underline" target="_blank" rel="noreferrer">
+        <a href="https://coredelle.com" className="underline" target="_blank" rel="noreferrer">
           Coredelle Digital
         </a>
       </p>

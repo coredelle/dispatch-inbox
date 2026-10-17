@@ -2,7 +2,9 @@
 
 Small freight brokers and dispatchers get load requests as messy emails and PDF rate confirmations, then retype the pickup, delivery, dates, weight and rate into a spreadsheet or TMS and chase the shipper for whatever's missing. **Dispatch Inbox** lets them paste the email or drop in the PDF instead. AI pulls the load details into a clean record, flags what's missing or uncertain, and drafts the reply asking for it. A person reviews and approves every record before it counts.
 
-A weekend MVP by [Coredelle Digital](https://coredellesmith.com). See [the case study](docs/case-study.md) for the problem, approach and results.
+**Live demo: [dispatch.coredelle.com](https://dispatch.coredelle.com)** (click *Try the demo*, no signup).
+
+A weekend MVP by [Coredelle Digital](https://coredelle.com). See [the case study](docs/case-study.md) for the problem, approach and results.
 
 ## What it does
 
