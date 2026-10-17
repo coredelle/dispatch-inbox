@@ -32,6 +32,7 @@ export default async function AboutPage() {
   return (
     <div className="flex min-h-screen flex-col">
     <SiteHeader>
+      <Link href="/case-study" className="underline-offset-4 hover:underline">Case study</Link>
       <Link href="/inbox" className="underline-offset-4 hover:underline">Load ledger</Link>
     </SiteHeader>
     <main className="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6">
@@ -39,7 +40,12 @@ export default async function AboutPage() {
       <h1 className="doc-title text-5xl">About this demo</h1>
       <p className="mt-2 text-muted-foreground">
         Dispatch Inbox turns messy load emails and rate confirmations into clean, reviewable load
-        records. It&apos;s a weekend MVP showing how an AI step fits into a real workflow.
+        records. It&apos;s a weekend MVP showing how an AI step fits into a real workflow. For the full
+        story, read the{" "}
+        <Link href="/case-study" className="font-medium text-foreground underline decoration-hivis decoration-2 underline-offset-4">
+          case study
+        </Link>
+        .
       </p>
 
       <h2 className="doc-title mt-10 border-b-2 border-foreground pb-1 text-2xl">How it works</h2>
@@ -84,6 +90,8 @@ export default async function AboutPage() {
         magic-link auth, file storage) · Anthropic API with structured outputs · Vercel.
       </p>
       <p className="mt-4 text-sm">
+        <Link href="/case-study" className="underline">Case study</Link>
+        {" · "}
         <a href={REPO_URL} className="underline" target="_blank" rel="noreferrer">Source code on GitHub</a>
         {" · "}
         Built by{" "}

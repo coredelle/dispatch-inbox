@@ -55,6 +55,7 @@ export default function LandingPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader>
+        <Link href="/case-study" className="underline-offset-4 hover:underline">Case study</Link>
         <Link href="/about" className="underline-offset-4 hover:underline">About this demo</Link>
         <Link href="/login" className="underline-offset-4 hover:underline">Sign in</Link>
       </SiteHeader>
@@ -89,6 +90,9 @@ export default function LandingPage() {
             </Link>
             <span className="text-sm text-muted-foreground">No signup. About a cent per load.</span>
           </div>
+          <Link href="/case-study" className="self-start text-sm font-medium underline decoration-hivis decoration-2 underline-offset-4">
+            Read the case study: problem, approach, results and cost per load →
+          </Link>
 
           <ol className="mt-4 grid gap-px overflow-hidden rounded-[var(--radius)] border bg-border sm:grid-cols-3">
             {STEPS.map((step, i) => (
