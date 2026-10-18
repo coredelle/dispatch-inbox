@@ -6,7 +6,7 @@ export function SiteFooter({ className }: { className?: string }) {
   return (
     <footer className={cn("perforated flex flex-col gap-3 pt-4 text-sm", className)}>
       <p>
-        <strong className="font-semibold">Run a brokerage or dispatch service?</strong> I can build this into your
+        <strong className="font-semibold">Run a brokerage or dispatch service?</strong> We can build this into your
         workflow, connected to your inbox and TMS.{" "}
         <a href={contactHref("Dispatch Inbox for my team")} className="font-medium underline decoration-hivis decoration-2 underline-offset-4">
           Let&apos;s talk

@@ -7,7 +7,7 @@ function StudioBar() {
     <div className="bg-foreground text-background">
       <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-1 px-4 py-1.5 text-sm sm:px-6">
         <span>
-          A sample project by <strong className="font-semibold">{STUDIO_NAME}</strong>. I build AI-powered MVPs.
+          A sample project by <strong className="font-semibold">{STUDIO_NAME}</strong>. We build AI-powered MVPs.
         </span>
         <a href={contactHref()} className="font-semibold underline decoration-hivis decoration-2 underline-offset-4">
           Get in touch →

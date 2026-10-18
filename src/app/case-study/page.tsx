@@ -256,7 +256,7 @@ export default function CaseStudyPage() {
           <div className="flex flex-wrap items-center gap-3">
             <DemoButton />
             <a href={contactHref("AI MVP project")} className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-11 px-5 text-base")}>
-              Have an idea? Email me
+              Have an idea? Email us
             </a>
           </div>
         </section>
