@@ -12,8 +12,8 @@ Keep the person in charge and let AI do the retyping.
 
 - **Extraction with a contract.** Each email or PDF goes to Claude Sonnet 5.5 with a strict JSON schema (structured outputs), so every response has the same shape. The model must leave absent values empty instead of guessing, and flag values the document leaves ambiguous. PDFs are read natively, with no separate OCR step.
 - **Review before it counts.** The source document sits beside editable fields. Missing fields are outlined red, uncertain ones amber, and nothing is final until a person approves it.
-- **Close the loop.** When details are missing, a smaller model (Claude Haiku 5.5) drafts a short, polite email asking for exactly those items. It sees only the structured fields, never the raw email, which keeps it cheap and stops text hidden in an email from steering it.
-- **Measure, then tune.** Eight fictional documents, from tidy emails to a messy forwarded thread and an email with an impossible date, run through the same code the app uses and are scored against an answer key. Prompt and schema changes are judged on that score, not on vibes.
+- **Close the loop.** When details are missing, a smaller model (Claude Haiku 5.5) drafts a short, signed email asking for exactly those items, and acknowledges what the sender asked without promising anything. It sees only the structured fields, never the raw email, which keeps it cheap and limits how much an email can steer it. It's written after the record appears, so nobody waits for it.
+- **Measure, then tune.** Nine fictional documents, from tidy emails to a messy forwarded thread, an impossible date and "next tues", run through the same code the app uses and are scored against an answer key. Prompt and schema changes are judged on that score, not on vibes.
 - **Production basics from day one.** Row-level security on every table, API keys used only on the server, per-user rate limits plus a daily spending cap, a private self-cleaning sandbox for every demo visitor, and cost logged for every AI call.
 
 ## Result

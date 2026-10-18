@@ -48,6 +48,7 @@ export function normalizeFields(input: unknown): LoadFields {
     reference_numbers: strList(f.reference_numbers),
     contact: { name: str(contact.name), email: str(contact.email), phone: str(contact.phone) },
     special_instructions: str(f.special_instructions),
+    sender_requests: str(f.sender_requests),
     missing_fields: strList(f.missing_fields),
     low_confidence_fields: strList(f.low_confidence_fields),
   };

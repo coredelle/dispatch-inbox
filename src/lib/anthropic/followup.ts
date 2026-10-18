@@ -1,13 +1,16 @@
 import "server-only";
 import Anthropic from "@anthropic-ai/sdk";
-import { FOLLOWUP_MODEL_NAME, estimateCostUsd } from "@/lib/config";
+import { FOLLOWUP_MODEL_NAME, FOLLOWUP_SIGNATURE, estimateCostUsd } from "@/lib/config";
 import { MISSING_FIELD_LABELS } from "@/lib/loads";
 import type { LoadFields } from "@/types";
 
 // Reads ANTHROPIC_API_KEY from the server environment
 const client = new Anthropic();
 
-const SYSTEM_PROMPT = `You write short follow-up emails for a freight dispatcher. Write a plain, polite email of 3 to 5 sentences asking only for the missing items listed. Greet the contact by first name if one is given. Do not invent details, do not add a subject line, and do not include placeholders like [Your Name]. Sign off with "Thanks," on its own line and nothing after it. Output only the email body as plain text.`;
+const SYSTEM_PROMPT = `You write short follow-up emails for a freight dispatcher. Write a plain, polite email of 3 to 5 sentences asking only for the missing items listed. Greet the contact by first name if one is given, then get straight to the point: no filler like "Thanks for getting this load moving". Refer to the load by its reference and cities (e.g. "PO 77812, Lancaster to Baltimore"), never full street addresses. If the sender asked for something, acknowledge it in one sentence, but never promise to cover the load, accept a rate or agree to a deadline; say you'll confirm once you have the missing details. Do not invent details, do not add a subject line, and do not include placeholders like [Your Name]. End with "Thanks," on its own line and nothing after it. Output only the email body as plain text.`;
+
+// Free text from the email reaches the cheap model only through this short, trimmed phrase
+const MAX_REQUEST_CHARS = 200;
 
 export interface FollowupOutcome {
   draft: string | null;
@@ -29,6 +32,7 @@ export async function draftFollowup(fields: LoadFields, missing: string[]): Prom
     `Shipper: ${fields.shipper_name ?? "unknown"}`,
     lane && `Lane: ${lane}`,
     fields.reference_numbers.length > 0 && `Reference: ${fields.reference_numbers.join(", ")}`,
+    fields.sender_requests && `Sender asked: ${fields.sender_requests.slice(0, MAX_REQUEST_CHARS)}`,
   ]
     .filter(Boolean)
     .join("\n");
@@ -47,7 +51,8 @@ export async function draftFollowup(fields: LoadFields, missing: string[]): Prom
     const text = response.content.find((b) => b.type === "text");
     const ok = response.stop_reason === "end_turn" && text?.type === "text";
     return {
-      draft: ok ? text.text.trim() : null,
+      // The signature is added here, not by the model, so it's always exactly right
+      draft: ok ? `${text.text.trim()}\n${FOLLOWUP_SIGNATURE}` : null,
       error: ok ? null : "Could not draft a follow-up email.",
       stopReason: response.stop_reason ?? "unknown",
       model: FOLLOWUP_MODEL_NAME,

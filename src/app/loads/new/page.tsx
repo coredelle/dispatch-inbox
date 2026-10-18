@@ -80,7 +80,7 @@ export default function NewLoadPage() {
   }
 
   async function extract(body: { text: string } | { filePath: string }) {
-    setProgress("Extracting… (about 10 seconds)");
+    setProgress("Extracting… (about 5 seconds)");
     const res = await fetch("/api/extract", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -157,7 +157,7 @@ export default function NewLoadPage() {
 
       <div className="mt-5 flex flex-col gap-2">
         <span className="eyebrow">Try a sample</span>
-        <div className="grid gap-2 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
           {SAMPLES.map((sample) => (
             <button
               key={sample.id}

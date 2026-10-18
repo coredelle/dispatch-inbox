@@ -18,7 +18,7 @@ export const EXTRACTION_SCHEMA = {
   required: [
     "shipper_name", "pickup", "delivery", "commodity", "weight_lbs",
     "equipment_type", "rate_usd", "reference_numbers", "contact",
-    "special_instructions", "missing_fields", "low_confidence_fields",
+    "special_instructions", "sender_requests", "missing_fields", "low_confidence_fields",
   ],
   properties: {
     shipper_name: {
@@ -70,6 +70,11 @@ export const EXTRACTION_SCHEMA = {
       },
     },
     special_instructions: { type: ["string", "null"] },
+    sender_requests: {
+      type: ["string", "null"],
+      description:
+        'What the sender asks the dispatcher to do or answer, with any deadline, as one short phrase (e.g. "Confirm coverage by end of day"). Null if they only describe the load.',
+    },
     missing_fields: {
       type: "array",
       items: { type: "string", enum: FIELD_KEYS },

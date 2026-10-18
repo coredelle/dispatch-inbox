@@ -8,7 +8,7 @@ import { contactHref } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const DESCRIPTION =
-  "How Coredelle Digital built Dispatch Inbox: an AI MVP that turns messy freight load emails and PDF rate confirmations into reviewable load records in about 10 seconds, for about a cent each.";
+  "How Coredelle Digital built Dispatch Inbox: an AI MVP that turns messy freight load emails and PDF rate confirmations into reviewable load records in about 5 seconds, for about a cent each.";
 
 export const metadata: Metadata = {
   title: "Case study",
@@ -34,11 +34,11 @@ const APPROACH = [
   },
   {
     title: "Close the loop.",
-    body: "When details are missing, Claude Haiku 5.5 drafts a short, polite email asking for exactly those items. It only sees the structured fields, never the raw email, which keeps it cheap and stops text hidden in an email from steering it.",
+    body: "When details are missing, Claude Haiku 5.5 drafts a short, signed email asking for exactly those items, and acknowledges what the sender asked (\u201ccan you cover by EOD?\u201d) without promising anything. It sees only the structured fields, never the raw email, which keeps it cheap and limits how much an email can steer it. It's written after the record appears, so nobody waits for it.",
   },
   {
     title: "Measure, then tune.",
-    body: "Eight fictional documents, from tidy emails to a messy forwarded thread and an email with an impossible date, run through the app's own extraction code and are scored against an answer key. Prompt changes are judged on that score.",
+    body: "Nine fictional documents, from tidy emails to a messy forwarded thread, an impossible date and \u201cnext tues\u201d, run through the app's own extraction code and are scored against an answer key. Prompt changes are judged on that score.",
   },
   {
     title: "Production basics from day one.",
@@ -47,8 +47,8 @@ const APPROACH = [
 ];
 
 const FIGURES = [
-  { label: "Time to record", value: "~10s", note: "from clicking Extract to a reviewable load" },
-  { label: "Accuracy", value: "8/8", note: "sample documents correct, up from 7/8 before tuning" },
+  { label: "Time to record", value: "~5s", note: "from clicking Extract to a reviewable load; the follow-up draft follows" },
+  { label: "Accuracy", value: "9/9", note: "fictional sample documents correct, stable across runs" },
   { label: "AI cost", value: "~1¢", note: "per load, including the follow-up draft" },
 ];
 
@@ -159,7 +159,7 @@ export default function CaseStudyPage() {
           </h1>
           <p className="max-w-2xl text-lg">
             Freight dispatchers retype load emails all day. Dispatch Inbox turns a messy email or PDF rate
-            confirmation into a reviewable load record in about ten seconds, for about a cent.
+            confirmation into a reviewable load record in about five seconds, for about a cent.
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <DemoButton />
@@ -206,7 +206,9 @@ export default function CaseStudyPage() {
             The tricky samples are where it earns its keep. In a forwarded thread where the shipper raises the rate
             from $1,600 to $1,750 in the last reply, it picks the final rate and the right contact. Given a pickup
             date of &ldquo;friday 11/31&rdquo;, which doesn&apos;t exist, it flags the date for a person instead of
-            inventing one. Missing details become a ready-to-send follow-up with one click to copy.
+            inventing one. &ldquo;Next tues&rdquo; and &ldquo;wed morning&rdquo; become real dates counted from the
+            email&apos;s sent date, flagged amber so a person double-checks them. Missing details become a
+            ready-to-send follow-up with one click to copy.
           </p>
         </Section>
 

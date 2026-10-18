@@ -75,7 +75,7 @@ export default async function AboutPage() {
         <Stat
           label="Average AI extraction time"
           value={stats.avgExtractionLatencyMs === null ? "—" : `${(stats.avgExtractionLatencyMs / 1000).toFixed(1)}s`}
-          note="the model call alone; with the follow-up draft, a visitor waits about 10s"
+          note="the AI call alone; the record is on screen about a second later, and any follow-up draft a couple of seconds after that"
         />
       </div>
       <p className="mt-3 text-sm text-muted-foreground">

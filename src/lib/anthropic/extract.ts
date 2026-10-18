@@ -7,7 +7,17 @@ import type { LoadFields } from "@/types";
 // Reads ANTHROPIC_API_KEY from the server environment
 const client = new Anthropic();
 
-const SYSTEM_PROMPT = `You extract freight load details from shipping emails and rate confirmations for a dispatcher. Use only information present in the document. If a value is absent, return null and list it in missing_fields; never guess. Put a field in low_confidence_fields when the document is ambiguous about it (for example, two different dates, an impossible date, a relative day like "by sunday", or a rate that might be per mile). An exact unit conversion is not ambiguous. In email threads, the most recent message wins when details change. Normalize dates to ISO 8601 and weights to pounds.`;
+const SYSTEM_PROMPT = `You extract freight load details from shipping emails and rate confirmations for a dispatcher. Use only information present in the document. If a value is absent, return null and list it in missing_fields; never guess. Resolve relative dates ("next tues", "tomorrow", "wed morning") to calendar dates, counting from the document's own sent date when it shows one and otherwise from the received date you are given, and put each date you resolved this way in low_confidence_fields so a person checks it. A vague time of day like "morning" gives a date with no time. Put a field in low_confidence_fields when the document is ambiguous about it (for example, two different dates, an impossible date, or a rate that might be per mile or depends on a condition). An exact unit conversion is not ambiguous. In email threads, the most recent message wins when details change. Normalize dates to ISO 8601 and weights to pounds.`;
+
+// US Central: close to the middle of US freight hours, so "today" rarely flips early
+const RECEIVED_TIME_ZONE = "America/Chicago";
+
+// "Received 2026-11-04 (Wednesday)": the anchor for relative dates when the document has no sent date
+function receivedLine(receivedAt: Date): string {
+  const date = receivedAt.toLocaleDateString("en-CA", { timeZone: RECEIVED_TIME_ZONE });
+  const day = receivedAt.toLocaleDateString("en-US", { weekday: "long", timeZone: RECEIVED_TIME_ZONE });
+  return `Received ${date} (${day}).`;
+}
 
 const MAX_TOKENS = 2048;
 const RETRY_MAX_TOKENS = 8192;
@@ -23,22 +33,22 @@ export interface ExtractionOutcome {
   estCostUsd: number;
 }
 
-export function extractFromEmail(text: string): Promise<ExtractionOutcome> {
+export function extractFromEmail(text: string, receivedAt = new Date()): Promise<ExtractionOutcome> {
   return runExtraction([
     {
       type: "text",
-      text: `Extract the load details from this email.\n\n<email>\n${text}\n</email>`,
+      text: `${receivedLine(receivedAt)} Extract the load details from this email.\n\n<email>\n${text}\n</email>`,
     },
   ]);
 }
 
-export function extractFromPdf(base64Pdf: string): Promise<ExtractionOutcome> {
+export function extractFromPdf(base64Pdf: string, receivedAt = new Date()): Promise<ExtractionOutcome> {
   return runExtraction([
     {
       type: "document",
       source: { type: "base64", media_type: "application/pdf", data: base64Pdf },
     },
-    { type: "text", text: "Extract the load details from this rate confirmation." },
+    { type: "text", text: `${receivedLine(receivedAt)} Extract the load details from this rate confirmation.` },
   ]);
 }
 

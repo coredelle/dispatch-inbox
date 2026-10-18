@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { extractFromEmail, extractFromPdf, type ExtractionOutcome } from "@/lib/anthropic/extract";
-import { draftFollowup } from "@/lib/anthropic/followup";
 import { computeMissing, normalizeFields } from "@/lib/loads";
 import { logRun } from "@/lib/runs";
 import { checkRateLimit } from "@/lib/rate-limit";
@@ -14,7 +13,9 @@ const MAX_PDF_BYTES = 10 * 1024 * 1024;
 const BUCKET = "load-documents";
 
 // Body is { text } for a pasted email, or { filePath } for a PDF the browser
-// already uploaded to storage (keeps large files out of the request body)
+// already uploaded to storage (keeps large files out of the request body).
+// Returns once the record is saved; the review screen then drafts any follow-up,
+// so the visitor sees the record without waiting for the second AI call.
 export async function POST(request: Request) {
   const supabase = await createClient();
   const {
@@ -90,11 +91,6 @@ export async function POST(request: Request) {
       missing_fields: missing,
       low_confidence_fields: fields.low_confidence_fields,
     };
-    if (missing.length > 0) {
-      const followup = await draftFollowup(fields, missing);
-      await logRun(supabase, load.id, followup);
-      update.followup_draft = followup.draft;
-    }
   }
   const { error: updateError } = await supabase
     .from("loads")

@@ -2,8 +2,11 @@ export const MODEL_NAME = "claude-sonnet-5-5";
 // Cheap model for the short follow-up email draft
 export const FOLLOWUP_MODEL_NAME = "claude-haiku-5-5";
 
+// Signs every follow-up draft (the fictional carrier the sample emails are addressed to)
+export const FOLLOWUP_SIGNATURE = "Ridgeline Freight Dispatch";
+
 // Claude-backed requests (extractions + follow-up drafts) per user per hour
-export const RATE_LIMIT_PER_HOUR = { demo: 20, user: 60 };
+export const RATE_LIMIT_PER_HOUR = { demo: 30, user: 60 };
 
 // Ceiling on demo requests across all sandboxes in any 24 hours, so a bot making
 // many sandboxes can't run up the bill (~1¢ each, so at most about $3 a day)

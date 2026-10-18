@@ -1,5 +1,5 @@
 {
-  "_readme": "Answer key for scripts/eval-extraction.ts. Dates are YYYY-MM-DD and match either earliest or latest. 'ambiguous' keys must be left empty or flagged low-confidence (a confident value fails). 'expect_low' keys must be flagged. 'allow_low' keys may be flagged without a warning.",
+  "_readme": "Answer key for scripts/eval-extraction.ts. Dates are YYYY-MM-DD and match either earliest or latest. 'ambiguous' keys must be left empty or flagged low-confidence (a confident value fails). 'expect_low' keys must be flagged. 'allow_low' keys may be flagged without a warning. 'asks' means sender_requests must be filled in. Relative dates count from the sent date, or from the eval's fixed received date (2026-11-02) when there is none.",
   "emails/01-tidy-dry-van.txt": {
     "shipper": "Blue Pine Goods",
     "pickup_city": "Columbus",
@@ -99,6 +99,30 @@
       "weight_lbs"
     ],
     "missing": []
+  },
+  "emails/07-relative-dates.txt": {
+    "shipper": "Cedar Point Creamery",
+    "pickup_city": "Lancaster",
+    "pickup_date": "2026-11-10",
+    "delivery_city": "Baltimore",
+    "delivery_date": "2026-11-11",
+    "weight_lbs": 38000,
+    "equipment": "reefer",
+    "rate_usd": 2250,
+    "refs": [
+      "77812"
+    ],
+    "contact": "Rosa Delgado",
+    "missing": [],
+    "expect_low": [
+      "pickup.date",
+      "delivery.date"
+    ],
+    "allow_low": [
+      "weight_lbs",
+      "rate_usd"
+    ],
+    "asks": true
   },
   "pdfs/ratecon-01-dry-van.pdf": {
     "shipper": "Magnolia Home Furnishings",

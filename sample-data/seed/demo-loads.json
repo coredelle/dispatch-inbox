@@ -30,7 +30,8 @@
         "44817"
       ],
       "special_instructions": "Driver must check in at the guard shack. No touch freight.",
-      "low_confidence_fields": []
+      "low_confidence_fields": [],
+      "sender_requests": null
     },
     "fields": {
       "pickup": {
@@ -58,7 +59,8 @@
         "44817"
       ],
       "special_instructions": "Driver must check in at the guard shack. No touch freight.",
-      "low_confidence_fields": []
+      "low_confidence_fields": [],
+      "sender_requests": null
     },
     "low_confidence_fields": [],
     "followup_draft": null,
@@ -105,7 +107,8 @@
         "IC-5562"
       ],
       "special_instructions": "48' flatbed, tarps and chains required. Rate includes tarp fee.",
-      "low_confidence_fields": []
+      "low_confidence_fields": [],
+      "sender_requests": null
     },
     "fields": {
       "pickup": {
@@ -133,7 +136,8 @@
         "IC-5562"
       ],
       "special_instructions": "48' flatbed, tarps and chains required. Rate includes tarp fee.",
-      "low_confidence_fields": []
+      "low_confidence_fields": [],
+      "sender_requests": null
     },
     "low_confidence_fields": [],
     "followup_draft": null,
@@ -184,7 +188,8 @@
       "special_instructions": "Load bars required. Driver must call Harborview dispatch on arrival at each stop. Blanket-wrapped items: do not double stack.",
       "low_confidence_fields": [
         "shipper_name"
-      ]
+      ],
+      "sender_requests": null
     },
     "fields": {
       "pickup": {
@@ -216,7 +221,8 @@
       "special_instructions": "Load bars required. Driver must call Harborview dispatch on arrival at each stop. Blanket-wrapped items: do not double stack.",
       "low_confidence_fields": [
         "shipper_name"
-      ]
+      ],
+      "sender_requests": null
     },
     "low_confidence_fields": [
       "shipper_name"
@@ -270,7 +276,8 @@
       "special_instructions": null,
       "low_confidence_fields": [
         "weight_lbs"
-      ]
+      ],
+      "sender_requests": "Let them know if we can cover it"
     },
     "fields": {
       "pickup": {
@@ -303,12 +310,13 @@
       "special_instructions": null,
       "low_confidence_fields": [
         "weight_lbs"
-      ]
+      ],
+      "sender_requests": "Let them know if we can cover it"
     },
     "low_confidence_fields": [
       "weight_lbs"
     ],
-    "followup_draft": "Hi Tom,\n\nI'm following up on shipment KP-30118 from Keystone Packaging, moving from 1650 Union Blvd, Allentown, PA 18109 to Tidewater Supply at 2400 Deepwater Terminal Rd, Richmond, VA 23234. To finalize the booking, could you please confirm the delivery date and time, and the rate for this load? Once I have those, I can get everything set up on our end. Thank you for your help.\n\nThanks,",
+    "followup_draft": "Hi Tom,\n\nCould you send the rate and the delivery date and time for KP-30118, Allentown to Richmond? Once I have those, I'll confirm whether we can cover it.\n\nThanks,\nRidgeline Freight Dispatch",
     "runs": [
       {
         "error": null,

@@ -32,6 +32,7 @@ export interface LoadFields {
     phone: string | null;
   };
   special_instructions: string | null;
+  sender_requests: string | null;
   missing_fields: string[];
   low_confidence_fields: string[];
 }

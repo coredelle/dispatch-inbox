@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Stamp } from "@/components/stamp";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -105,6 +105,17 @@ export function ReviewForm({ load, extractionError }: { load: Load; extractionEr
     }
     setDraft(data.draft ?? "");
   }
+
+  // A fresh extraction arrives without a follow-up; write it now, while the reviewer reads the record
+  const autoDrafted = useRef(false);
+  useEffect(() => {
+    if (autoDrafted.current || !fields || draft || status !== "needs_review") return;
+    if (computeMissing(normalizeFields(fields)).length === 0) return;
+    autoDrafted.current = true;
+    regenerate();
+    // Runs once on arrival; later drafts come from the Regenerate button
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function copyDraft() {
     try {
@@ -212,6 +223,7 @@ export function ReviewForm({ load, extractionError }: { load: Load; extractionEr
               <Field label="Name">{input("contact.name", fields.contact.name, (v) => update((f) => { f.contact.name = v; }))}</Field>
               <Field label="Phone">{input("contact.phone", fields.contact.phone, (v) => update((f) => { f.contact.phone = v; }))}</Field>
               <Field label="Email" wide>{input("contact.email", fields.contact.email, (v) => update((f) => { f.contact.email = v; }), { type: "email" })}</Field>
+              <Field label="They're asking" wide>{input("sender_requests", fields.sender_requests, (v) => update((f) => { f.sender_requests = v; }))}</Field>
               <Field label="Special instructions" wide>
                 <Textarea
                   value={fields.special_instructions ?? ""}
@@ -268,7 +280,9 @@ export function ReviewForm({ load, extractionError }: { load: Load; extractionEr
                   className="min-h-40 rounded-sm bg-card font-mono text-sm leading-relaxed"
                 />
               ) : (
-                <p className="text-sm text-muted-foreground">No draft yet. Click Regenerate to write one.</p>
+                <p className="text-sm text-muted-foreground">
+                  {drafting ? "Drafting a follow-up asking for what's missing…" : "No draft yet. Click Regenerate to write one."}
+                </p>
               )}
               <p className="text-xs text-muted-foreground">Copy this into your own email. The app never sends email.</p>
             </div>

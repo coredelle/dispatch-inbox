@@ -23,7 +23,11 @@ interface Expected {
   ambiguous?: string[];
   expect_low?: string[];
   allow_low?: string[];
+  asks?: boolean;
 }
+
+// Fixed "today" so relative dates in samples without a sent date resolve the same way every run
+const RECEIVED_AT = new Date("2026-11-02T15:00:00Z");
 
 const DATE_FORMAT = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2})?$/;
 
@@ -43,8 +47,8 @@ async function main() {
   for (const [file, exp] of entries) {
     const fullPath = path.join(process.cwd(), "sample-data", file);
     const outcome = file.endsWith(".pdf")
-      ? await extractFromPdf((await readFile(fullPath)).toString("base64"))
-      : await extractFromEmail(await readFile(fullPath, "utf8"));
+      ? await extractFromPdf((await readFile(fullPath)).toString("base64"), RECEIVED_AT)
+      : await extractFromEmail(await readFile(fullPath, "utf8"), RECEIVED_AT);
     totalCost += outcome.estCostUsd;
     totalLatency += outcome.latencyMs;
 
@@ -98,6 +102,7 @@ async function main() {
         );
       }
       check(lc(f.contact.name).includes(lc(exp.contact)), `contact: expected ${exp.contact}, got "${f.contact.name}"`);
+      if (exp.asks) check(f.sender_requests !== null, "sender_requests: expected the sender's ask, got none");
 
       const relevantMissing = missing.filter((m) => !ambiguous.includes(m));
       check(
