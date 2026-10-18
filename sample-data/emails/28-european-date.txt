@@ -1,0 +1,23 @@
+From: Oliver Grant <o.grant@thamesvaletea.example>
+To: dispatch@ridgelinefreight.example
+Date: Mon, 2 Nov 2026 14:00:00 +0000
+Subject: Collection from Newark port - TVT-2026-118
+
+Hello,
+
+We are arranging inland delivery for a container of tea from our UK office.
+
+Shipper: Thames Vale Tea Ltd
+Collection: Port Newark Container Terminal, 241 Calcutta St, Newark, NJ 07114
+Collection date: 12/11/2026, from 09:00
+Delivery: Thames Vale Tea US warehouse, 450 Raritan Center Pkwy, Edison, NJ 08837
+Delivery: same day
+Goods: 20 pallets boxed tea, 15,000 lbs
+Equipment: 53' dry van (transload)
+Rate: USD 650
+Our reference: TVT-2026-118
+
+Kind regards,
+Oliver Grant
+Thames Vale Tea Ltd
++44 20 7946 0123

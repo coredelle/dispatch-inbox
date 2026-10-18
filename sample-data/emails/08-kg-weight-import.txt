@@ -1,0 +1,25 @@
+From: Ingrid Larsen <i.larsen@nordhavnimports.example>
+To: dispatch@ridgelinefreight.example
+Date: Thu, 5 Nov 2026 10:22:41 -0500
+Subject: Container drayage follow-on: Savannah to Charlotte, order 4471-EU
+
+Hello Ridgeline team,
+
+We have one full load coming off the vessel next week and need it moved inland.
+
+Shipper: Nordhavn Imports
+Pickup: Nordhavn Imports cross-dock, 120 Brampton Rd, Savannah, GA 31408
+Pickup date: 12 November 2026, from 08:00
+Delivery: Nordhavn Imports showroom, 5400 Old Dowd Rd, Charlotte, NC 28208
+Delivery date: 13 November 2026, before 15:00
+
+Cargo: flat-pack furniture, 26 pallets
+Gross weight: 18,000 kg
+Equipment: 53 ft dry van
+Agreed rate: USD 2,400 all-in
+Our order: 4471-EU
+
+Best regards,
+Ingrid Larsen
+Logistics Coordinator, Nordhavn Imports
++1 (912) 555-0134

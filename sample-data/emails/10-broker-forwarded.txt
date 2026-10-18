@@ -1,0 +1,24 @@
+From: Kelsey Moore <kmoore@transaxisbrokerage.example>
+To: dispatch@ridgelinefreight.example
+Date: Thu, 12 Nov 2026 13:30:55 -0600
+Subject: TA-55120 Baton Rouge LA > Houston TX 11/18
+
+Hi Ridgeline,
+
+Have a dry van for you from one of our shippers, Bayou Paper Co.
+
+PU: Bayou Paper Co., 1800 Scenic Hwy, Baton Rouge, LA 70805
+11/18, 7:00am - 3:00pm
+DEL: Gulf Coast Packaging, 8900 Clinton Dr, Houston, TX 77029
+11/19, appt 8:00am
+
+Commodity: paper rolls, 40,000 lbs
+53' dry van, load bars required
+Rate: $1,150 flat
+Our load #: TA-55120 / Shipper PO 88231
+
+Reply to confirm and I'll send the rate con.
+
+Kelsey Moore
+TransAxis Brokerage
+(225) 555-0166

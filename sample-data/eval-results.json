@@ -1,0 +1,93 @@
+{
+  "runAt": "2026-10-18T04:09:28.436Z",
+  "extractionModel": "claude-sonnet-5-5",
+  "followupModel": "claude-haiku-5-5",
+  "samples": 30,
+  "emails": 28,
+  "pdfs": 2,
+  "fullyCorrect": 29,
+  "fields": [
+    {
+      "field": "Shipper",
+      "correct": 30,
+      "total": 30
+    },
+    {
+      "field": "Pickup location",
+      "correct": 30,
+      "total": 30
+    },
+    {
+      "field": "Pickup date",
+      "correct": 30,
+      "total": 30
+    },
+    {
+      "field": "Delivery location",
+      "correct": 30,
+      "total": 30
+    },
+    {
+      "field": "Delivery date",
+      "correct": 29,
+      "total": 30
+    },
+    {
+      "field": "Weight",
+      "correct": 30,
+      "total": 30
+    },
+    {
+      "field": "Equipment",
+      "correct": 30,
+      "total": 30
+    },
+    {
+      "field": "Rate",
+      "correct": 30,
+      "total": 30
+    },
+    {
+      "field": "References",
+      "correct": 30,
+      "total": 30
+    },
+    {
+      "field": "Contact",
+      "correct": 30,
+      "total": 30
+    },
+    {
+      "field": "Missing-field flags",
+      "correct": 29,
+      "total": 30
+    },
+    {
+      "field": "Uncertainty flags",
+      "correct": 4,
+      "total": 4
+    },
+    {
+      "field": "Sender's ask",
+      "correct": 4,
+      "total": 4
+    },
+    {
+      "field": "Follow-up draft",
+      "correct": 6,
+      "total": 6
+    }
+  ],
+  "totalCostUsd": 0.2654,
+  "avgExtractionSeconds": 2.5,
+  "failures": [
+    {
+      "file": "emails/27-bare-minimum.txt",
+      "passed": false,
+      "failures": [
+        "Delivery date: expected none, got 2026-11-06 / null",
+        "Missing-field flags: expected [\"shipper_name\",\"delivery.date\",\"commodity\",\"weight_lbs\",\"equipment_type\",\"rate_usd\"], got [\"shipper_name\",\"commodity\",\"weight_lbs\",\"equipment_type\",\"rate_usd\"]"
+      ]
+    }
+  ]
+}

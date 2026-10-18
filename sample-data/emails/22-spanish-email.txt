@@ -1,0 +1,20 @@
+From: Lucía Herrera <lherrera@fronteratextiles.example>
+To: dispatch@ridgelinefreight.example
+Date: Mon, 9 Nov 2026 08:20:00 -0600
+Subject: Carga Laredo a San Antonio - pedido FT-3307
+
+Buenos días,
+
+Necesitamos una caja seca de 53 pies:
+
+Embarcador: Frontera Textiles
+Recolección: 9200 Mines Rd, Laredo, TX 78045 - jueves 12 de noviembre de 2026, 7:00 a 11:00
+Entrega: Alamo Apparel DC, 4500 S Zarzamora St, San Antonio, TX 78211 - viernes 13 de noviembre, antes de las 10:00
+Mercancía: rollos de tela, 40,000 lb
+Tarifa: $650 USD
+Pedido: FT-3307
+
+Saludos,
+Lucía Herrera
+Frontera Textiles
+(956) 555-0109

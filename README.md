@@ -59,7 +59,7 @@ So a load costs about **a cent**. The live About page shows running averages fro
 
 ## Accuracy
 
-`npm run eval` runs every sample in [`sample-data/`](sample-data) through the same extraction code the app uses and scores it against an answer key ([`sample-data/expected.json`](sample-data/expected.json)): shipper, lane, dates, weight, equipment, rate, references, contact, missing fields, and whether ambiguous values were flagged instead of guessed. The samples include tidy emails, a forwarded thread where the rate changes mid-thread, an informal email with an impossible date and a per-mile rate, an email missing the rate and delivery date, an email with relative dates ("next tues", "wed morning") and a "can you cover?", and two PDF rate confirmations. Tightening the prompt and schema took the first eight from 7/8 to 8/8; with the relative-dates sample it's **9/9**, stable across runs. Relative dates resolve against a fixed received date so runs are repeatable. All sample companies, people and numbers are fictional.
+`npm run eval` runs all 30 samples in [`sample-data/`](sample-data) (28 emails, 2 PDF rate confirmations) through the same extraction code the app uses and scores each field against an answer key ([`sample-data/expected.json`](sample-data/expected.json)): shipper, lane, dates and times, weight, equipment, rate, references, contact, which fields were flagged missing or uncertain, and whether the sender's question was caught. Samples with missing details also get a follow-up draft, checked for a signature, no placeholders or street addresses, no promises, and length. Each sample targets a quirk of real dispatch email: kilograms, per-mile rates with mileage, fuel surcharges, a rate con pasted as text, all caps, a Spanish email, a load that moved mid-thread, a broker posting with no shipper, relative and European dates, two loads in one email, and a multi-stop load. A full run writes [`sample-data/eval-results.json`](sample-data/eval-results.json), which the case study page reads. Latest: **29/30** samples fully correct (30/30 on another run); the one that moves is a two-line email where "friday" isn't labeled pickup or delivery. All sample companies, people and numbers are fictional.
 
 ## Demo safeguards
 
@@ -87,7 +87,7 @@ Requires Node 22 (`.nvmrc`), a Supabase project and an Anthropic API key.
 5. In Supabase → Authentication → Sign In / Providers, turn on **Allow anonymous sign-ins** (the demo sandboxes need it).
 6. `npm run dev` and open http://localhost:3000.
 
-Other scripts: `npm run eval` (extraction accuracy, about 7¢ per full run), `npm run lint`, `npm run build`.
+Other scripts: `npm run eval` (extraction accuracy, about 27¢ per full run), `npm run lint`, `npm run build`.
 
 ## Project layout
 

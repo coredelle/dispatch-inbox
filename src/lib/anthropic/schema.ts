@@ -73,7 +73,7 @@ export const EXTRACTION_SCHEMA = {
     sender_requests: {
       type: ["string", "null"],
       description:
-        'What the sender asks the dispatcher to do or answer, with any deadline, as one short phrase (e.g. "Confirm coverage by end of day"). Null if they only describe the load.',
+        'What the sender asks the dispatcher to decide or answer, with any deadline, as one short phrase (e.g. "Confirm coverage by end of day", "Send a quote"). Not contact preferences like "text me" or "call with ETA". Null if they only describe the load.',
     },
     missing_fields: {
       type: "array",

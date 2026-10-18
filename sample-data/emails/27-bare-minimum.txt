@@ -1,0 +1,8 @@
+From: Phil <phil.t@example.com>
+To: dispatch@ridgelinefreight.example
+Date: Wed, 4 Nov 2026 17:45:00 -0500
+Subject: load
+
+got a load toledo to detroit friday, can you do it?
+
+-phil

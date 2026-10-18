@@ -1,0 +1,22 @@
+From: Sam Dorsey <sdorsey@keelboatbrewing.example>
+To: dispatch@ridgelinefreight.example
+Date: Thu, 5 Nov 2026 15:25:00 -0500
+Subject: Kegs to Columbus - KBB-404
+
+Hi,
+
+Need a dry van for kegs, about 40,000 lbs.
+
+Pickup: Keelboat Brewing, 1100 W 6th St, Cincinnati, OH 45203 - 11/10, 6am-9am
+Delivery: Buckeye Beverage, 2400 Westbelt Dr, Columbus, OH 43228 - 11/10, 2pm appt
+Rate: $700
+
+Load summary
+------------
+Pallets: 22
+Weight: 42,000 lbs
+Ref: KBB-404
+
+Sam Dorsey
+Keelboat Brewing
+(513) 555-0153

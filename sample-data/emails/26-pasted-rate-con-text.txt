@@ -1,0 +1,23 @@
+SUMMIT LANE EXPRESS - CARRIER RATE CONFIRMATION
+Load #: SLX-772013          Date: 11/20/2026
+Carrier: Ridgeline Freight LLC
+Broker contact: Tara Quinn  |  tquinn@summitlane.example  |  (904) 555-0117
+
+STOP 1 - PICKUP
+Coastal Cabinetry
+2200 Talleyrand Ave, Jacksonville, FL 32206
+11/30/2026  08:00-12:00   PU# CC-4410
+
+STOP 2 - DELIVERY
+Buckeye Home Center DC
+3800 Alum Creek Dr, Columbus, OH 43207
+12/02/2026  07:00 APPT   PO# 99817
+
+Commodity: kitchen cabinets      Pieces: 24 pallets
+Weight: 44,000 LBS              Equipment: 53' DRY VAN
+
+Linehaul:           $2,900.00
+Fuel surcharge:       $250.00
+TOTAL CARRIER PAY:  $3,150.00
+
+Driver must call 1 hr before arrival. No double brokering.

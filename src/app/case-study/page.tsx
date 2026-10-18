@@ -5,6 +5,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Stamp } from "@/components/stamp";
 import { contactHref } from "@/lib/site";
+import evalResults from "../../../sample-data/eval-results.json";
 import { cn } from "@/lib/utils";
 
 const DESCRIPTION =
@@ -38,7 +39,7 @@ const APPROACH = [
   },
   {
     title: "Measure, then tune.",
-    body: "Nine fictional documents, from tidy emails to a messy forwarded thread, an impossible date and \u201cnext tues\u201d, run through the app's own extraction code and are scored against an answer key. Prompt changes are judged on that score.",
+    body: "Thirty fictional documents, each built around a quirk of real dispatch email (kilograms, per-mile rates, a rate con pasted as text, a Spanish email, a load that moved mid-thread), run through the app's own code and are scored field by field. Prompt changes are judged on that score.",
   },
   {
     title: "Production basics from day one.",
@@ -48,7 +49,11 @@ const APPROACH = [
 
 const FIGURES = [
   { label: "Time to record", value: "~5s", note: "from clicking Extract to a reviewable load; the follow-up draft follows" },
-  { label: "Accuracy", value: "9/9", note: "fictional sample documents correct, stable across runs" },
+  {
+    label: "Accuracy",
+    value: `${evalResults.fullyCorrect}/${evalResults.samples}`,
+    note: "fictional samples with every field right, latest run",
+  },
   { label: "AI cost", value: "~1¢", note: "per load, including the follow-up draft" },
 ];
 
@@ -56,6 +61,26 @@ const COSTS = [
   { step: "Extract an email", model: "Claude Sonnet 5.5", cost: "~0.8¢" },
   { step: "Extract a 1-page PDF", model: "Claude Sonnet 5.5", cost: "~1.3¢" },
   { step: "Draft the follow-up", model: "Claude Haiku 5.5", cost: "~0.01¢" },
+];
+
+// The request path, top to bottom; "side" notes run alongside a step
+const PIPELINE: { step: string; detail: string; side?: string }[] = [
+  { step: "Paste or upload", detail: "An email, or a PDF that goes straight from the browser to private storage" },
+  { step: "Check", detail: "Signed-in sandbox or user, hourly and daily limits, and a real PDF in the visitor's own folder", side: "Next.js on Vercel" },
+  { step: "Extract", detail: "Claude Sonnet 5.5 returns JSON that must match a strict schema; empty when absent, flagged when unsure", side: "Anthropic API" },
+  { step: "Save and show", detail: "Postgres with row-level security, so each visitor only ever reads their own rows", side: "Supabase" },
+  { step: "Draft the follow-up", detail: "Claude Haiku 5.5 writes from the structured fields while the reviewer reads", side: "Anthropic API" },
+  { step: "Approve", detail: "A person checks the flags, edits, and stamps it. Nothing counts until then" },
+];
+
+const PRODUCTION_ADDS = [
+  "Reads the dispatch inbox directly (Gmail or Outlook) instead of copy and paste",
+  "Exports approved loads to the TMS the team already uses",
+  "Multi-load and multi-stop records",
+  "An eval set built from the client's own anonymized email, re-run on every prompt change",
+  "Several runs per sample to catch answers that change between runs",
+  "Team accounts with roles, an audit log, and a retention policy for email contents",
+  "Alerts on failure rate, latency and spend",
 ];
 
 const RECORD_ROWS: { label: string; value: string; flag?: "missing" | "low"; flagText?: string }[] = [
@@ -140,6 +165,50 @@ function LoadTicket() {
   );
 }
 
+// The architecture as a stack of forms, readable on a phone
+function Pipeline() {
+  return (
+    <ol className="flex flex-col">
+      {PIPELINE.map((item, i) => (
+        <li key={item.step} className="flex flex-col items-stretch">
+          <div className="sheet grid gap-1 p-3 sm:grid-cols-[2.5rem_9rem_minmax(0,1fr)_9rem] sm:items-center sm:gap-3">
+            <span className="font-mono text-xs text-muted-foreground">{String(i + 1).padStart(2, "0")}</span>
+            <span className="doc-title text-xl">{item.step}</span>
+            <span className="text-sm">{item.detail}</span>
+            <span className="eyebrow sm:text-right">{item.side ?? ""}</span>
+          </div>
+          {i < PIPELINE.length - 1 && <span aria-hidden="true" className="ml-6 h-4 w-px bg-foreground" />}
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+function FieldAccuracy() {
+  return (
+    <div className="sheet overflow-x-auto">
+      <table className="w-full border-collapse text-sm">
+        <thead>
+          <tr className="border-b-2 border-foreground">
+            <th className="eyebrow px-4 py-2.5 text-left">Field</th>
+            <th className="eyebrow px-4 py-2.5 text-right">Correct</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-border">
+          {evalResults.fields.map((f) => (
+            <tr key={f.field}>
+              <td className="px-4 py-2">{f.field}</td>
+              <td className={cn("px-4 py-2 text-right font-mono tabular-nums", f.correct < f.total && "font-semibold text-flag-missing")}>
+                {f.correct} of {f.total}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 export default function CaseStudyPage() {
   return (
     <div className="flex min-h-screen flex-col">
@@ -192,6 +261,13 @@ export default function CaseStudyPage() {
           </ul>
         </Section>
 
+        <Section label="How it fits together" title="One request, two models, a person at the end">
+          <Pipeline />
+          <p className="text-sm text-muted-foreground">
+            A daily job deletes demo sandboxes older than 24 hours, files included, and keeps the cost log.
+          </p>
+        </Section>
+
         <Section label="Result" title="Accurate, fast, and reviewable">
           <div className="sheet grid gap-px overflow-hidden bg-border sm:grid-cols-3">
             {FIGURES.map((f) => (
@@ -210,6 +286,49 @@ export default function CaseStudyPage() {
             email&apos;s sent date, flagged amber so a person double-checks them. Missing details become a
             ready-to-send follow-up with one click to copy.
           </p>
+        </Section>
+
+        <Section label="Evaluation" title="Scored field by field">
+          <p>
+            {evalResults.samples} fictional documents ({evalResults.emails} emails, {evalResults.pdfs} PDF rate
+            confirmations), each with an answer key. Every field is checked, plus whether the right fields were
+            flagged as missing or uncertain, whether the sender&apos;s question was caught, and whether the
+            follow-up is signed, short, free of street addresses and promises nothing.
+          </p>
+          <FieldAccuracy />
+          <p className="text-sm text-muted-foreground">
+            Latest run, {evalResults.extractionModel} and {evalResults.followupModel}, about{" "}
+            {Math.round(evalResults.totalCostUsd * 100)}¢ for the whole set. These are documents we wrote to cover
+            known quirks, so treat it as a regression test, not a benchmark. A client&apos;s own email would be
+            the next eval set.
+          </p>
+        </Section>
+
+        <Section label="Where it falls short" title="One honest failure, two known limits">
+          <div className="sheet flex flex-col gap-3 p-4">
+            <p className="font-mono text-sm">&ldquo;got a load toledo to detroit friday, can you do it? -phil&rdquo;</p>
+            <p>
+              The one sample that still misses. &ldquo;Friday&rdquo; doesn&apos;t say pickup or delivery, and the
+              answer changes between runs: some runs put it on pickup, some on both ends, some on neither. It&apos;s
+              always flagged for a double-check, so a reviewer catches it, but the record isn&apos;t stable.
+            </p>
+            <p>
+              <strong className="font-semibold">How we&apos;d handle it:</strong> a written house rule (an
+              unlabeled day is the pickup day, the convention most dispatchers use), checked against the client&apos;s
+              real email, and an eval that runs each sample several times so an answer that wobbles fails even when
+              one run gets lucky.
+            </p>
+          </div>
+          <ul className="flex flex-col gap-2 text-sm">
+            <li>
+              <strong className="font-semibold">Two loads in one email.</strong> A record holds one load, so the app
+              keeps the first. It should split them into two records.
+            </li>
+            <li>
+              <strong className="font-semibold">Multi-stop loads.</strong> A record has one delivery, so a middle
+              stop ends up in the notes. Real use needs a list of stops.
+            </li>
+          </ul>
         </Section>
 
         <Section label="Cost per load" title="Priced per token, measured per call">
@@ -248,6 +367,21 @@ export default function CaseStudyPage() {
             auth, file storage), the Anthropic API with structured outputs, and Vercel.{" "}
             <Link href="/about" className="underline">Live cost and speed numbers</Link> are on the About page.
           </p>
+        </Section>
+
+        <Section label="Built in a weekend" title="What a weekend leaves out">
+          <p>
+            Fast doesn&apos;t mean careless: the weekend version already has row-level security, rate limits, a
+            spending cap, an eval and a cost log. A production version for a real team would add:
+          </p>
+          <ul className="flex flex-col gap-2">
+            {PRODUCTION_ADDS.map((item) => (
+              <li key={item} className="grid grid-cols-[1.25rem_minmax(0,1fr)] gap-2">
+                <span aria-hidden="true" className="mt-1.5 size-3 rounded-[2px] border-[1.5px] border-foreground" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
         </Section>
 
         <section className="sheet flex flex-col items-start gap-3 p-5">

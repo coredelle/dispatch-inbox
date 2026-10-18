@@ -1,0 +1,18 @@
+From: Gary Whitlock <gwhitlock@ironbridgesupply.example>
+To: dispatch@ridgelinefreight.example
+Date: Mon, 9 Nov 2026 12:12:12 -0500
+Subject: Dry van Louisville to Indianapolis, IBS-5530
+
+Hi team,
+
+Shipper: Ironbridge Supply
+Pickup: 4400 Bishop Ln, Louisville, KY 40218 - 11/12, 10:00-14:00
+Delivery: 6100 W Washington St, Indianapolis, IN 46241 - 11/13, 07:00
+Freight: 30 pallets plumbing fixtures, 33,800 lbs
+Equipment: 53' dry van
+Rate: linehaul $1,800 + fuel surcharge $240 = $2,040 all in
+Ref: IBS-5530
+
+Gary Whitlock
+Ironbridge Supply
+(502) 555-0175

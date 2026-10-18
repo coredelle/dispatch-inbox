@@ -1,5 +1,5 @@
 {
-  "_readme": "Answer key for scripts/eval-extraction.ts. Dates are YYYY-MM-DD and match either earliest or latest. 'ambiguous' keys must be left empty or flagged low-confidence (a confident value fails). 'expect_low' keys must be flagged. 'allow_low' keys may be flagged without a warning. 'asks' means sender_requests must be filled in. Relative dates count from the sent date, or from the eval's fixed received date (2026-11-02) when there is none.",
+  "_readme": "Answer key for scripts/eval-extraction.ts. Dates are YYYY-MM-DD and match either earliest or latest; pickup_time/delivery_time (HH:MM) must appear in one of them. A null shipper, weight, rate or date means the value must be left empty. 'ambiguous' keys must be left empty or flagged low-confidence (a confident value fails). 'expect_low' keys must be flagged. 'allow_low' keys may be flagged without a warning. 'asks' true means sender_requests must be filled in. 'known_limitation' marks a case the app can't fully represent yet. Relative dates count from the sent date, or from the eval's fixed received date (2026-11-02, a Monday) when there is none.",
   "emails/01-tidy-dry-van.txt": {
     "shipper": "Blue Pine Goods",
     "pickup_city": "Columbus",
@@ -123,6 +123,374 @@
       "rate_usd"
     ],
     "asks": true
+  },
+  "emails/08-kg-weight-import.txt": {
+    "shipper": "Nordhavn Imports",
+    "pickup_city": "Savannah",
+    "pickup_date": "2026-11-12",
+    "delivery_city": "Charlotte",
+    "delivery_date": "2026-11-13",
+    "weight_lbs": 39683,
+    "equipment": "dry_van",
+    "rate_usd": 2400,
+    "refs": [
+      "4471-EU"
+    ],
+    "contact": "Ingrid Larsen",
+    "missing": []
+  },
+  "emails/09-per-mile-with-miles.txt": {
+    "shipper": "Prairie Line Lumber",
+    "pickup_city": "Omaha",
+    "pickup_date": "2026-11-16",
+    "delivery_city": "Denver",
+    "delivery_date": "2026-11-17",
+    "weight_lbs": 44000,
+    "equipment": "flatbed",
+    "rate_usd": 1948.8,
+    "refs": [
+      "PLL-9081"
+    ],
+    "contact": "Hank Sorensen",
+    "missing": [],
+    "allow_low": [
+      "rate_usd"
+    ]
+  },
+  "emails/10-broker-forwarded.txt": {
+    "shipper": "Bayou Paper",
+    "pickup_city": "Baton Rouge",
+    "pickup_date": "2026-11-18",
+    "delivery_city": "Houston",
+    "delivery_date": "2026-11-19",
+    "weight_lbs": 40000,
+    "equipment": "dry_van",
+    "rate_usd": 1150,
+    "refs": [
+      "TA-55120",
+      "88231"
+    ],
+    "contact": "Kelsey Moore",
+    "missing": []
+  },
+  "emails/11-text-message-tomorrow.txt": {
+    "shipper": "Granite Ridge Stone",
+    "pickup_city": "Barre",
+    "pickup_date": "2026-11-03",
+    "delivery_city": "Albany",
+    "delivery_date": null,
+    "weight_lbs": 46000,
+    "equipment": "flatbed",
+    "rate_usd": 1300,
+    "refs": [
+      "GRS-118"
+    ],
+    "contact": "Mike",
+    "missing": [
+      "delivery.date"
+    ],
+    "expect_low": [
+      "pickup.date"
+    ],
+    "asks": false
+  },
+  "emails/12-all-caps-terse.txt": {
+    "shipper": "Ozark Valley Meats",
+    "pickup_city": "Springfield",
+    "pickup_date": "2026-11-19",
+    "delivery_city": "Tulsa",
+    "delivery_date": "2026-11-20",
+    "weight_lbs": 42500,
+    "equipment": "reefer",
+    "rate_usd": 1450,
+    "refs": [
+      "61207"
+    ],
+    "contact": "Jim",
+    "missing": []
+  },
+  "emails/13-load-board-no-shipper.txt": {
+    "shipper": null,
+    "pickup_city": "Chicago",
+    "pickup_date": "2026-11-23",
+    "delivery_city": "Indianapolis",
+    "delivery_date": "2026-11-23",
+    "weight_lbs": 35000,
+    "equipment": "dry_van",
+    "rate_usd": 900,
+    "refs": [],
+    "contact": "Rachel Kim",
+    "missing": [
+      "shipper_name"
+    ]
+  },
+  "emails/14-step-deck.txt": {
+    "shipper": "Heartland Equipment Rentals",
+    "pickup_city": "Peoria",
+    "pickup_date": "2026-11-24",
+    "delivery_city": "Nashville",
+    "delivery_date": "2026-11-25",
+    "weight_lbs": 38000,
+    "equipment": "step_deck",
+    "rate_usd": 2850,
+    "refs": [
+      "HER-2203"
+    ],
+    "contact": "Carla Nguyen",
+    "missing": []
+  },
+  "emails/15-power-only.txt": {
+    "shipper": "Sierra Outdoor Supply",
+    "pickup_city": "Sparks",
+    "pickup_date": "2026-11-12",
+    "delivery_city": "Sacramento",
+    "delivery_date": "2026-11-12",
+    "weight_lbs": 30000,
+    "equipment": "power_only",
+    "rate_usd": 750,
+    "refs": [
+      "SOS-4410"
+    ],
+    "contact": "Ben Akers",
+    "missing": [],
+    "allow_low": [
+      "weight_lbs"
+    ]
+  },
+  "emails/16-two-loads-one-email.txt": {
+    "shipper": "Lakeshore Plastics",
+    "pickup_city": "Cleveland",
+    "pickup_date": "2026-11-05",
+    "delivery_city": "Pittsburgh",
+    "delivery_date": "2026-11-06",
+    "weight_lbs": 41000,
+    "equipment": "dry_van",
+    "rate_usd": 950,
+    "refs": [
+      "30551"
+    ],
+    "contact": "Nora Feld",
+    "missing": [],
+    "allow_low": [
+      "pickup.date",
+      "delivery.location",
+      "delivery.date",
+      "weight_lbs",
+      "rate_usd",
+      "commodity"
+    ],
+    "known_limitation": "One record per document: an email with two loads should become two records. The app keeps the first load and should say a second one exists."
+  },
+  "emails/17-multi-stop.txt": {
+    "shipper": "Central Valley Produce",
+    "pickup_city": "Fresno",
+    "pickup_date": "2026-11-16",
+    "delivery_city": "Los Angeles",
+    "delivery_date": "2026-11-16",
+    "weight_lbs": 36000,
+    "equipment": "reefer",
+    "rate_usd": 1600,
+    "refs": [
+      "CVP-7741"
+    ],
+    "contact": "Diego Ramos",
+    "missing": [],
+    "allow_low": [
+      "delivery.location",
+      "delivery.date"
+    ],
+    "known_limitation": "One delivery per record: the Bakersfield stop has nowhere to go except special instructions."
+  },
+  "emails/18-pickup-moved-thread.txt": {
+    "shipper": "Summit Beverage",
+    "pickup_city": "Milwaukee",
+    "pickup_date": "2026-11-10",
+    "delivery_city": "Minneapolis",
+    "delivery_date": "2026-11-11",
+    "weight_lbs": 42000,
+    "equipment": "dry_van",
+    "rate_usd": 1275,
+    "refs": [
+      "SBC-2290"
+    ],
+    "contact": "Priya Shah",
+    "missing": []
+  },
+  "emails/19-fuel-surcharge.txt": {
+    "shipper": "Ironbridge Supply",
+    "pickup_city": "Louisville",
+    "pickup_date": "2026-11-12",
+    "delivery_city": "Indianapolis",
+    "delivery_date": "2026-11-13",
+    "weight_lbs": 33800,
+    "equipment": "dry_van",
+    "rate_usd": 2040,
+    "refs": [
+      "IBS-5530"
+    ],
+    "contact": "Gary Whitlock",
+    "missing": []
+  },
+  "emails/20-quote-request-no-rate.txt": {
+    "shipper": "Blue Hollow Candle",
+    "pickup_city": "Asheville",
+    "pickup_date": "2026-11-10",
+    "delivery_city": "Atlanta",
+    "delivery_date": "2026-11-11",
+    "weight_lbs": 18500,
+    "equipment": "dry_van",
+    "rate_usd": null,
+    "refs": [
+      "BH-1192"
+    ],
+    "contact": "Megan Ortiz",
+    "missing": [
+      "rate_usd"
+    ],
+    "asks": true
+  },
+  "emails/21-time-words.txt": {
+    "shipper": "Harbor Light Seafood",
+    "pickup_city": "Portland",
+    "pickup_date": "2026-11-13",
+    "delivery_city": "Boston",
+    "delivery_date": "2026-11-16",
+    "weight_lbs": 28000,
+    "equipment": "reefer",
+    "rate_usd": 1050,
+    "refs": [
+      "HLS-8812"
+    ],
+    "contact": "Leo Brennan",
+    "missing": [],
+    "pickup_time": "12:00",
+    "delivery_time": "08:00"
+  },
+  "emails/22-spanish-email.txt": {
+    "shipper": "Frontera Textiles",
+    "pickup_city": "Laredo",
+    "pickup_date": "2026-11-12",
+    "delivery_city": "San Antonio",
+    "delivery_date": "2026-11-13",
+    "weight_lbs": 40000,
+    "equipment": "dry_van",
+    "rate_usd": 650,
+    "refs": [
+      "FT-3307"
+    ],
+    "contact": "Lucía Herrera",
+    "missing": []
+  },
+  "emails/23-conflicting-weight.txt": {
+    "shipper": "Keelboat Brewing",
+    "pickup_city": "Cincinnati",
+    "pickup_date": "2026-11-10",
+    "delivery_city": "Columbus",
+    "delivery_date": "2026-11-10",
+    "weight_lbs": null,
+    "equipment": "dry_van",
+    "rate_usd": 700,
+    "refs": [
+      "KBB-404"
+    ],
+    "contact": "Sam Dorsey",
+    "missing": [],
+    "ambiguous": [
+      "weight_lbs"
+    ]
+  },
+  "emails/24-frozen-no-equipment.txt": {
+    "shipper": "Pinecrest Poultry",
+    "pickup_city": "Gainesville",
+    "pickup_date": "2026-11-17",
+    "delivery_city": "Orlando",
+    "delivery_date": "2026-11-18",
+    "weight_lbs": 41000,
+    "equipment": "reefer",
+    "rate_usd": 1900,
+    "refs": [
+      "PP-55821"
+    ],
+    "contact": "Tasha Greene",
+    "missing": [],
+    "allow_low": [
+      "equipment_type"
+    ]
+  },
+  "emails/25-dispatcher-latest-reply.txt": {
+    "shipper": "Tallgrass Seed",
+    "pickup_city": "Wichita",
+    "pickup_date": "2026-11-19",
+    "delivery_city": "Kansas City",
+    "delivery_date": "2026-11-20",
+    "weight_lbs": 39000,
+    "equipment": "dry_van",
+    "rate_usd": 1100,
+    "refs": [
+      "TGS-1180"
+    ],
+    "contact": "Owen Price",
+    "missing": []
+  },
+  "emails/26-pasted-rate-con-text.txt": {
+    "shipper": "Coastal Cabinetry",
+    "pickup_city": "Jacksonville",
+    "pickup_date": "2026-11-30",
+    "delivery_city": "Columbus",
+    "delivery_date": "2026-12-02",
+    "weight_lbs": 44000,
+    "equipment": "dry_van",
+    "rate_usd": 3150,
+    "refs": [
+      "SLX-772013",
+      "CC-4410",
+      "99817"
+    ],
+    "contact": "Tara Quinn",
+    "missing": []
+  },
+  "emails/27-bare-minimum.txt": {
+    "shipper": null,
+    "pickup_city": "Toledo",
+    "pickup_date": "2026-11-06",
+    "delivery_city": "Detroit",
+    "delivery_date": null,
+    "weight_lbs": null,
+    "equipment": "unknown",
+    "rate_usd": null,
+    "refs": [],
+    "contact": "Phil",
+    "missing": [
+      "shipper_name",
+      "delivery.date",
+      "commodity",
+      "weight_lbs",
+      "equipment_type",
+      "rate_usd"
+    ],
+    "expect_low": [
+      "pickup.date"
+    ],
+    "asks": true
+  },
+  "emails/28-european-date.txt": {
+    "shipper": "Thames Vale Tea",
+    "pickup_city": "Newark",
+    "pickup_date": "2026-11-12",
+    "delivery_city": "Edison",
+    "delivery_date": "2026-11-12",
+    "weight_lbs": 15000,
+    "equipment": "dry_van",
+    "rate_usd": 650,
+    "refs": [
+      "TVT-2026-118"
+    ],
+    "contact": "Oliver Grant",
+    "missing": [],
+    "ambiguous": [
+      "pickup.date",
+      "delivery.date"
+    ]
   },
   "pdfs/ratecon-01-dry-van.pdf": {
     "shipper": "Magnolia Home Furnishings",
