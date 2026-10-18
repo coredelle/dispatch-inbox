@@ -152,6 +152,7 @@ export default function NewLoadPage() {
       <h1 className="doc-title text-5xl">New load</h1>
       <p className="mt-2 text-muted-foreground">
         Paste a load email or drop in a rate confirmation. No load email handy? Pick a sample. They&apos;re all fictional.
+        Demo sandboxes are private and deleted within two days.
       </p>
 
       <div className="mt-5 flex flex-col gap-2">

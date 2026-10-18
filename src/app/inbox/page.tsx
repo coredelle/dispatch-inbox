@@ -6,7 +6,8 @@ import { SiteHeader } from "@/components/site-header";
 import { Stamp } from "@/components/stamp";
 import { buttonVariants } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { isDemoUser } from "@/lib/demo";
+import { isSandboxUser } from "@/lib/demo";
+import { RATE_LIMIT_PER_HOUR } from "@/lib/config";
 import { STATUS_LABELS, formatDateTime, formatUsd } from "@/lib/loads";
 import { ResetDemoButton } from "./reset-demo-button";
 import { cn } from "@/lib/utils";
@@ -61,12 +62,12 @@ export default async function InboxPage({ searchParams }: PageProps<"/inbox">) {
           <span className="eyebrow">{loads.length} {loads.length === 1 ? "load" : "loads"} on file</span>
         </div>
 
-        {isDemoUser(user) && (
+        {isSandboxUser(user) && (
           <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border border-hivis bg-hivis/15 p-3 text-sm">
             <p>
-              <span className="eyebrow mr-2 text-foreground">Note</span>
-              You&apos;re in the shared demo account. Anything you add is visible to other visitors, and
-              AI requests are limited to 20 per hour.
+              <span className="eyebrow mr-2 text-foreground">Your sandbox</span>
+              Private to you: no one else sees what you add, and it&apos;s deleted automatically within two
+              days. AI requests are limited to {RATE_LIMIT_PER_HOUR.demo} per hour.
             </p>
             <ResetDemoButton />
           </div>

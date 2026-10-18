@@ -12,7 +12,7 @@ A weekend MVP by [Coredelle Digital](https://coredelle.com). Read the [case stud
 - **Review**: the source sits beside editable fields. Missing fields are outlined red, ambiguous ones amber. Approve, reject, or reopen.
 - **Follow up**: if anything's missing, a cheaper model drafts a 3–5 sentence email asking for just those items. Copy it; the app never sends email.
 - **Track**: an inbox table of all loads, filterable by status, and an About page with live cost and speed averages.
-- **Demo**: "Try the demo" signs visitors into a shared, rate-limited demo account with seeded loads. No signup.
+- **Demo**: "Try the demo" gives each visitor a private, rate-limited sandbox with seeded loads and one-click sample documents. No signup.
 
 ## Architecture
 
@@ -62,9 +62,10 @@ So a load costs about **a cent**. The live About page shows running averages fro
 
 ## Demo safeguards
 
-- Separate demo user. Its password lives only in server env vars, and each demo login restores it, so a visitor can't lock others out.
-- **Reset demo** restores 4 seeded loads (real extractions, including a PDF). Only the demo user can trigger it.
-- Claude-backed requests are rate-limited per user per hour (demo 20, others 60), counted in a table that resets can't clear.
+- Each visitor is an anonymous Supabase user with a private sandbox. Row-level security keeps sandboxes apart, so no one sees what another visitor pasted.
+- New sandboxes are seeded with 4 loads (real extractions, including a PDF). **Start over** restores them and only touches the caller's own sandbox.
+- A daily Vercel Cron job (`/api/cron/cleanup`, protected by `CRON_SECRET`) deletes sandboxes older than 24 hours, files included. The cost log and usage counts are kept.
+- Claude-backed requests are rate-limited per user per hour (demo 20, others 60), plus a cap of 300 demo requests a day across all sandboxes (about $3), so a bot creating sandboxes can't run up the bill. Supabase also limits new anonymous users per IP.
 - Set a monthly spend limit in the Anthropic Console as a final backstop.
 
 ## Run it locally
@@ -78,12 +79,11 @@ Requires Node 22 (`.nvmrc`), a Supabase project and an Anthropic API key.
    NEXT_PUBLIC_SUPABASE_ANON_KEY=<publishable key>
    SUPABASE_SERVICE_ROLE_KEY=<secret key>
    ANTHROPIC_API_KEY=<key>
-   DEMO_USER_EMAIL=demo@example.com
-   DEMO_USER_PASSWORD=<random string>
+   CRON_SECRET=<random string>
    ```
 3. Run the SQL files in [`supabase/migrations/`](supabase/migrations) in order in the Supabase SQL Editor.
 4. In Supabase → Authentication → URL Configuration, allow `http://localhost:3000/**` as a redirect URL.
-5. `npm run demo:create-user` creates the demo user (seed loads are added on its first login).
+5. In Supabase → Authentication → Sign In / Providers, turn on **Allow anonymous sign-ins** (the demo sandboxes need it).
 6. `npm run dev` and open http://localhost:3000.
 
 Other scripts: `npm run eval` (extraction accuracy, about 7¢ per full run), `npm run lint`, `npm run build`.
@@ -96,5 +96,5 @@ src/lib/anthropic/       extraction + follow-up calls and the JSON schema (serve
 src/lib/                 config, load helpers, demo, rate limit, stats, Supabase clients
 supabase/migrations/     tables, RLS policies, storage bucket
 sample-data/             fictional emails and PDFs, answer key, demo seed
-scripts/                 demo user setup, extraction eval
+scripts/                 extraction eval
 ```

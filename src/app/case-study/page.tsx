@@ -42,7 +42,7 @@ const APPROACH = [
   },
   {
     title: "Production basics from day one.",
-    body: "Row-level security on every table, API keys used only on the server, per-user rate limits, a self-healing shared demo account, and a cost log for every AI call.",
+    body: "Row-level security on every table, API keys used only on the server, per-user rate limits plus a daily spending cap, a private sandbox for every demo visitor that cleans itself up, and a cost log for every AI call.",
   },
 ];
 
@@ -251,7 +251,8 @@ export default function CaseStudyPage() {
         <section className="sheet flex flex-col items-start gap-3 p-5">
           <span className="doc-title text-3xl">See it on a real load</span>
           <p className="text-muted-foreground">
-            The demo comes with sample loads, and one-click sample emails and PDFs to try. All of them are fictional.
+            Each visitor gets a private sandbox with sample loads and one-click sample emails and PDFs, or paste your
+            own load email. Sandboxes are deleted within two days.
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <DemoButton />

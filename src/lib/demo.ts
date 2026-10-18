@@ -5,49 +5,32 @@ import path from "node:path";
 import type { User } from "@supabase/supabase-js";
 import seedLoads from "../../sample-data/seed/demo-loads.json";
 import { createAdminClient } from "@/lib/supabase/admin";
-import type { createClient } from "@/lib/supabase/server";
 import { computeMissing, normalizeFields } from "@/lib/loads";
-
-type Supabase = Awaited<ReturnType<typeof createClient>>;
 
 const BUCKET = "load-documents";
 
-export function isDemoConfigured(): boolean {
-  return Boolean(process.env.DEMO_USER_EMAIL && process.env.DEMO_USER_PASSWORD);
+// Sandboxes are deleted this long after the visitor starts one
+export const SANDBOX_TTL_HOURS = 24;
+
+// "Try the demo" visitors are anonymous Supabase users, each with their own rows
+export function isSandboxUser(user: Pick<User, "is_anonymous"> | null): boolean {
+  return Boolean(user?.is_anonymous);
 }
 
-export function isDemoUser(user: Pick<User, "email"> | null): boolean {
-  const demoEmail = process.env.DEMO_USER_EMAIL?.toLowerCase();
-  return Boolean(demoEmail && user?.email?.toLowerCase() === demoEmail);
-}
-
-// Signs the shared demo user in on this request's cookie session. If a visitor
-// changed the demo password, restore it from the env var and retry.
-export async function signInDemo(supabase: Supabase): Promise<User | null> {
-  const email = process.env.DEMO_USER_EMAIL!;
-  const password = process.env.DEMO_USER_PASSWORD!;
-
-  const first = await supabase.auth.signInWithPassword({ email, password });
-  if (first.data.user) return first.data.user;
-
+// Removes every file the user uploaded
+async function removeFiles(userId: string): Promise<void> {
   const admin = createAdminClient();
-  const { data } = await admin.auth.admin.listUsers({ page: 1, perPage: 1000 });
-  const demo = data?.users.find((u) => u.email?.toLowerCase() === email.toLowerCase());
-  if (!demo) return null;
-  await admin.auth.admin.updateUserById(demo.id, { password });
-
-  const retry = await supabase.auth.signInWithPassword({ email, password });
-  return retry.data.user;
-}
-
-// Replaces all of the demo user's loads and files with the seed set
-export async function resetDemoData(userId: string): Promise<void> {
-  const admin = createAdminClient();
-
   const { data: files } = await admin.storage.from(BUCKET).list(userId, { limit: 1000 });
   if (files && files.length > 0) {
     await admin.storage.from(BUCKET).remove(files.map((f) => `${userId}/${f.name}`));
   }
+}
+
+// Replaces all of a sandbox's loads and files with the seed set
+export async function resetDemoData(userId: string): Promise<void> {
+  const admin = createAdminClient();
+
+  await removeFiles(userId);
   const { error: deleteError } = await admin.from("loads").delete().eq("user_id", userId);
   if (deleteError) throw deleteError;
 
@@ -88,8 +71,32 @@ export async function resetDemoData(userId: string): Promise<void> {
 
     if (seed.runs.length > 0) {
       await admin.from("extraction_runs").insert(
-        seed.runs.map((run) => ({ ...run, load_id: load.id, created_at: createdAt })),
+        seed.runs.map((run) => ({ ...run, load_id: load.id, created_at: createdAt, is_seed: true })),
       );
     }
   }
+}
+
+// Deletes anonymous sandboxes older than the TTL, files first (storage doesn't cascade).
+// Loads go with the user; the cost log and usage counts stay.
+export async function deleteExpiredSandboxes(): Promise<number> {
+  const admin = createAdminClient();
+  const cutoff = Date.now() - SANDBOX_TTL_HOURS * 60 * 60_000;
+  const expired: string[] = [];
+
+  for (let page = 1; ; page++) {
+    const { data, error } = await admin.auth.admin.listUsers({ page, perPage: 1000 });
+    if (error) throw error;
+    for (const u of data.users) {
+      if (u.is_anonymous && new Date(u.created_at).getTime() < cutoff) expired.push(u.id);
+    }
+    if (data.users.length < 1000) break;
+  }
+
+  for (const id of expired) {
+    await removeFiles(id);
+    const { error } = await admin.auth.admin.deleteUser(id);
+    if (error) console.error("Sandbox delete failed:", id, error);
+  }
+  return expired.length;
 }
