@@ -8,6 +8,7 @@ import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SAMPLES, type Sample } from "@/lib/samples";
 import { cn } from "@/lib/utils";
 import type { LoadFields } from "@/types";
 
@@ -35,6 +36,8 @@ export default function NewLoadPage() {
   const [progress, setProgress] = useState<string | null>(null);
   const [result, setResult] = useState<ExtractResponse | null>(null);
   const [needsLogin, setNeedsLogin] = useState(false);
+  const [tab, setTab] = useState("email");
+  const [loadingSample, setLoadingSample] = useState<string | null>(null);
   const fileInput = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -54,8 +57,30 @@ export default function NewLoadPage() {
     setFile(f);
   }
 
+  // Fills the form with a fictional sample, ready to extract
+  async function loadSample(sample: Sample) {
+    setResult(null);
+    setLoadingSample(sample.id);
+    try {
+      const res = await fetch(`/samples/${sample.id}`);
+      if (!res.ok) throw new Error();
+      if (sample.kind === "pdf") {
+        const blob = await res.blob();
+        setFile(new File([blob], sample.file.split("/").pop()!, { type: "application/pdf" }));
+        setTab("pdf");
+      } else {
+        setText(await res.text());
+        setTab("email");
+      }
+    } catch {
+      setResult({ error: "Couldn't load that sample. Please try again." });
+    } finally {
+      setLoadingSample(null);
+    }
+  }
+
   async function extract(body: { text: string } | { filePath: string }) {
-    setProgress("Extracting… (usually ~10s)");
+    setProgress("Extracting… (about 10 seconds)");
     const res = await fetch("/api/extract", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -125,9 +150,29 @@ export default function NewLoadPage() {
     <main className="mx-auto w-full max-w-3xl px-4 py-8 sm:px-6">
       <span className="eyebrow">Intake</span>
       <h1 className="doc-title text-5xl">New load</h1>
-      <p className="mt-2 text-muted-foreground">Paste a load email or drop in a rate confirmation. It takes a few seconds.</p>
+      <p className="mt-2 text-muted-foreground">
+        Paste a load email or drop in a rate confirmation. No load email handy? Pick a sample. They&apos;re all fictional.
+      </p>
 
-      <Tabs defaultValue="email" className="mt-6">
+      <div className="mt-5 flex flex-col gap-2">
+        <span className="eyebrow">Try a sample</span>
+        <div className="grid gap-2 sm:grid-cols-3 lg:grid-cols-5">
+          {SAMPLES.map((sample) => (
+            <button
+              key={sample.id}
+              type="button"
+              disabled={busy || loadingSample !== null}
+              onClick={() => loadSample(sample)}
+              className="sheet flex flex-col items-start gap-0.5 rounded-sm px-3 py-2 text-left transition-colors hover:border-foreground hover:bg-hivis/15 focus-visible:border-foreground focus-visible:outline-none disabled:opacity-60"
+            >
+              <span className="doc-title text-lg">{loadingSample === sample.id ? "Loading…" : sample.label}</span>
+              <span className="text-xs text-muted-foreground">{sample.hint}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <Tabs value={tab} onValueChange={(v) => setTab(String(v))} className="mt-6">
         <TabsList variant="line" className="gap-4">
           <TabsTrigger value="email" className="font-display text-lg font-semibold uppercase tracking-wide">Paste email</TabsTrigger>
           <TabsTrigger value="pdf" className="font-display text-lg font-semibold uppercase tracking-wide">Upload PDF</TabsTrigger>

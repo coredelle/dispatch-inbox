@@ -1,16 +1,17 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Stamp } from "@/components/stamp";
 import { cn } from "@/lib/utils";
 
-const PREVIEW_ROWS: { label: string; value: string; missing?: boolean }[] = [
+const PREVIEW_ROWS: { label: string; value: string; missing?: string }[] = [
   { label: "Shipper", value: "Keystone Packaging" },
   { label: "Pickup", value: "Allentown, PA · 11/19 07:00–13:00" },
-  { label: "Delivery", value: "Richmond, VA", missing: true },
+  { label: "Delivery", value: "Richmond, VA", missing: "Date missing" },
   { label: "Freight", value: "26 plt corrugated · 31,000 lb" },
   { label: "Equipment", value: "53' dry van" },
-  { label: "Rate", value: "—", missing: true },
+  { label: "Rate", value: "—", missing: "Missing" },
   { label: "Ref", value: "KP-30118" },
 ];
 
@@ -35,7 +36,7 @@ function LoadRecordPreview() {
             <dt className="eyebrow">{row.label}</dt>
             <dd className="flex items-center gap-2 font-mono text-sm">
               {row.value}
-              {row.missing && <span data-status="missing" className="stamp stamp-sm">Missing</span>}
+              {row.missing && <span data-status="missing" className="stamp stamp-sm">{row.missing}</span>}
             </dd>
           </div>
         ))}
@@ -57,10 +58,10 @@ export default function LandingPage() {
       <SiteHeader>
         <Link href="/case-study" className="underline-offset-4 hover:underline">Case study</Link>
         <Link href="/about" className="underline-offset-4 hover:underline">About this demo</Link>
-        <Link href="/login" className="underline-offset-4 hover:underline">Sign in</Link>
       </SiteHeader>
 
-      <main className="mx-auto grid w-full max-w-6xl flex-1 items-center gap-12 px-4 py-12 sm:px-6 lg:grid-cols-[1.1fr_1fr]">
+      {/* On phones the record card sits right under the pitch; on desktop it fills the right column */}
+      <main className="mx-auto grid w-full max-w-6xl flex-1 items-center gap-x-12 gap-y-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.1fr_1fr]">
         <div className="flex flex-col gap-6">
           <span className="eyebrow">Freight load intake · AI-assisted</span>
           <h1 className="doc-title text-5xl sm:text-7xl">
@@ -85,16 +86,19 @@ export default function LandingPage() {
                 Try the demo
               </button>
             </form>
-            <Link href="/login" className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-11 px-5 text-base")}>
-              Sign in
-            </Link>
-            <span className="text-sm text-muted-foreground">No signup. About a cent per load.</span>
+            <span className="text-sm">No signup. Sample loads included.</span>
           </div>
           <Link href="/case-study" className="self-start text-sm font-medium underline decoration-hivis decoration-2 underline-offset-4">
             Read the case study: problem, approach, results and cost per load →
           </Link>
+        </div>
 
-          <ol className="mt-4 grid gap-px overflow-hidden rounded-[var(--radius)] border bg-border sm:grid-cols-3">
+        <div className="flex justify-center lg:row-span-2 lg:justify-end">
+          <LoadRecordPreview />
+        </div>
+
+        <div className="flex flex-col gap-8 lg:col-start-1">
+          <ol className="grid gap-px overflow-hidden rounded-[var(--radius)] border bg-border sm:grid-cols-3">
             {STEPS.map((step, i) => (
               <li key={step.title} className="flex flex-col gap-1 bg-card p-3">
                 <span className="font-mono text-xs text-muted-foreground">Step {i + 1}</span>
@@ -103,19 +107,9 @@ export default function LandingPage() {
               </li>
             ))}
           </ol>
-        </div>
-
-        <div className="flex justify-center lg:justify-end">
-          <LoadRecordPreview />
+          <SiteFooter />
         </div>
       </main>
-
-      <footer className="border-t px-4 py-6 text-center text-sm text-muted-foreground">
-        Built by{" "}
-        <a href="https://coredelle.com" className="underline" target="_blank" rel="noreferrer">
-          Coredelle Digital
-        </a>
-      </footer>
     </div>
   );
 }

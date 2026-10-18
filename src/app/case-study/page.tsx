@@ -1,17 +1,27 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Stamp } from "@/components/stamp";
+import { contactHref } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-export const metadata: Metadata = {
-  title: "Case study · Dispatch Inbox",
-  description:
-    "How Dispatch Inbox turns messy freight load emails and PDF rate confirmations into reviewable load records in about 3 seconds for about a cent each.",
-};
+const DESCRIPTION =
+  "How Coredelle Digital built Dispatch Inbox: an AI MVP that turns messy freight load emails and PDF rate confirmations into reviewable load records in about 10 seconds, for about a cent each.";
 
-const REPO_URL = "https://github.com/coredelle/dispatch-inbox";
+export const metadata: Metadata = {
+  title: "Case study",
+  description: DESCRIPTION,
+  // Restated in full: openGraph from the layout is replaced, not merged
+  openGraph: {
+    type: "article",
+    siteName: "Dispatch Inbox",
+    title: "Case study: Dispatch Inbox, an AI MVP by Coredelle Digital",
+    description: DESCRIPTION,
+    url: "/case-study",
+  },
+};
 
 const APPROACH = [
   {
@@ -37,7 +47,7 @@ const APPROACH = [
 ];
 
 const FIGURES = [
-  { label: "Time to record", value: "~3s", note: "from paste or upload to a reviewable load" },
+  { label: "Time to record", value: "~10s", note: "from clicking Extract to a reviewable load" },
   { label: "Accuracy", value: "8/8", note: "sample documents correct, up from 7/8 before tuning" },
   { label: "AI cost", value: "~1¢", note: "per load, including the follow-up draft" },
 ];
@@ -48,9 +58,9 @@ const COSTS = [
   { step: "Draft the follow-up", model: "Claude Haiku 5.5", cost: "~0.01¢" },
 ];
 
-const RECORD_ROWS: { label: string; value: string; flag?: "missing" | "low" }[] = [
+const RECORD_ROWS: { label: string; value: string; flag?: "missing" | "low"; flagText?: string }[] = [
   { label: "Pickup", value: "Allentown, PA · 11/19 07:00–13:00" },
-  { label: "Delivery", value: "Richmond, VA", flag: "missing" },
+  { label: "Delivery", value: "Richmond, VA", flag: "missing", flagText: "Date missing" },
   { label: "Weight", value: "31,000 lb · double-check", flag: "low" },
   { label: "Equipment", value: "53' dry van" },
   { label: "Rate", value: "—", flag: "missing" },
@@ -113,7 +123,7 @@ function LoadTicket() {
               <dt className="eyebrow">{row.label}</dt>
               <dd className={cn("flex items-center gap-2 text-right font-mono text-xs", row.flag === "low" && "text-flag-low")}>
                 {row.value}
-                {row.flag === "missing" && <span data-status="missing" className="stamp stamp-sm">Missing</span>}
+                {row.flag === "missing" && <span data-status="missing" className="stamp stamp-sm">{row.flagText ?? "Missing"}</span>}
               </dd>
             </div>
           ))}
@@ -149,11 +159,11 @@ export default function CaseStudyPage() {
           </h1>
           <p className="max-w-2xl text-lg">
             Freight dispatchers retype load emails all day. Dispatch Inbox turns a messy email or PDF rate
-            confirmation into a reviewable load record in about three seconds, for about a cent.
+            confirmation into a reviewable load record in about ten seconds, for about a cent.
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <DemoButton />
-            <span className="text-sm text-muted-foreground">No signup. Seeded with sample loads.</span>
+            <span className="text-sm">No signup. Sample loads included.</span>
           </div>
         </header>
 
@@ -241,20 +251,17 @@ export default function CaseStudyPage() {
         <section className="sheet flex flex-col items-start gap-3 p-5">
           <span className="doc-title text-3xl">See it on a real load</span>
           <p className="text-muted-foreground">
-            The demo is seeded with sample loads. Paste your own load email or drop in a PDF rate confirmation.
+            The demo comes with sample loads, and one-click sample emails and PDFs to try. All of them are fictional.
           </p>
-          <DemoButton />
+          <div className="flex flex-wrap items-center gap-3">
+            <DemoButton />
+            <a href={contactHref("AI MVP project")} className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-11 px-5 text-base")}>
+              Have an idea? Email me
+            </a>
+          </div>
         </section>
 
-        <footer className="perforated flex flex-wrap justify-between gap-x-6 gap-y-2 pt-4 text-sm text-muted-foreground">
-          <span>
-            Built over a weekend by{" "}
-            <a href="https://coredelle.com" className="underline" target="_blank" rel="noreferrer">
-              Coredelle Digital
-            </a>
-          </span>
-          <a href={REPO_URL} className="underline" target="_blank" rel="noreferrer">Source on GitHub</a>
-        </footer>
+        <SiteFooter />
       </main>
     </div>
   );

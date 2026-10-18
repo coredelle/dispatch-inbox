@@ -121,14 +121,20 @@ export function ReviewForm({ load, extractionError }: { load: Load; extractionEr
     <input className="field-input" data-flag={flag(path)} value={value ?? ""} onChange={(e) => onChange(e.target.value)} {...extra} />
   );
   const dateProps = { placeholder: "YYYY-MM-DDTHH:MM" };
+  const internalId = load.id.slice(0, 8).toUpperCase();
+  const primaryRef = fields?.reference_numbers.find((r) => r.trim()) ?? null;
 
   return (
     <section className="flex min-w-0 flex-col gap-5">
       <div className="flex items-start justify-between gap-4 border-b-2 border-foreground pb-3">
         <div className="flex flex-col gap-1">
-          <span className="eyebrow">Load №</span>
-          <h1 className="doc-title text-4xl">{load.id.slice(0, 8).toUpperCase()}</h1>
-          <span className="font-mono text-xs text-muted-foreground">Received {formatDateTime(load.created_at.slice(0, 10))}</span>
+          {/* Dispatchers look loads up by the shipper's PO or reference, so lead with it */}
+          <span className="eyebrow">{primaryRef ? "Shipper reference" : "Load №"}</span>
+          <h1 className="doc-title break-all text-4xl">{primaryRef ?? internalId}</h1>
+          <span className="font-mono text-xs text-muted-foreground">
+            Received {formatDateTime(load.created_at.slice(0, 10))}
+            {primaryRef && ` · ID ${internalId}`}
+          </span>
         </div>
         <Stamp key={status} status={status} size="lg" land={stamped} className="mt-2 mr-1 shrink-0 max-sm:text-base" />
       </div>

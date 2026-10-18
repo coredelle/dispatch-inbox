@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { connection } from "next/server";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getUsageStats } from "@/lib/stats";
 
-export const metadata: Metadata = { title: "About this demo · Dispatch Inbox" };
-
-const REPO_URL = "https://github.com/coredelle/dispatch-inbox";
+export const metadata: Metadata = { title: "About this demo" };
 
 function cents(usd: number | null): string {
   if (usd === null) return "—";
@@ -71,13 +70,13 @@ export default async function AboutPage() {
       <p className="mt-1 text-sm text-muted-foreground">
         Live averages from every extraction this demo has run, using published per-token prices.
       </p>
-      <div className="sheet mt-4 grid gap-px overflow-hidden bg-border sm:grid-cols-3">
+      <div className="sheet mt-4 grid gap-px overflow-hidden bg-border sm:grid-cols-2">
         <Stat label="Average cost per load" value={cents(stats.avgCostPerLoad)} note="extraction + follow-up draft" />
         <Stat
-          label="Average extraction time"
+          label="Average AI extraction time"
           value={stats.avgExtractionLatencyMs === null ? "—" : `${(stats.avgExtractionLatencyMs / 1000).toFixed(1)}s`}
+          note="the model call alone; with the follow-up draft, a visitor waits about 10s"
         />
-        <Stat label="Loads processed" value={stats.loads.toLocaleString("en-US")} />
       </div>
       <p className="mt-3 text-sm text-muted-foreground">
         Per call: extraction {cents(stats.avgExtractionCost)} on {stats.extractionModel}, follow-up
@@ -89,16 +88,7 @@ export default async function AboutPage() {
         Next.js, TypeScript, Tailwind and shadcn/ui · Supabase (Postgres with row-level security,
         magic-link auth, file storage) · Anthropic API with structured outputs · Vercel.
       </p>
-      <p className="mt-4 text-sm">
-        <Link href="/case-study" className="underline">Case study</Link>
-        {" · "}
-        <a href={REPO_URL} className="underline" target="_blank" rel="noreferrer">Source code on GitHub</a>
-        {" · "}
-        Built by{" "}
-        <a href="https://coredelle.com" className="underline" target="_blank" rel="noreferrer">
-          Coredelle Digital
-        </a>
-      </p>
+      <SiteFooter className="mt-10" />
     </main>
     </div>
   );

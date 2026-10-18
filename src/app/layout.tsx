@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Barlow_Condensed, IBM_Plex_Mono, Public_Sans } from "next/font/google";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 // Freight-paperwork type: condensed form headings, plain body, typewriter-ish data
@@ -20,10 +22,24 @@ const mono = IBM_Plex_Mono({
   weight: ["400", "500", "600"],
 });
 
+const DESCRIPTION =
+  "A sample AI MVP by Coredelle Digital. Paste a freight load email or drop in a PDF rate confirmation: AI builds a clean load record, flags what's missing, and drafts the follow-up. Live demo, no signup.";
+
 export const metadata: Metadata = {
-  title: "Dispatch Inbox",
-  description:
-    "Paste a load email or drop in a rate confirmation PDF. AI extracts the details, flags what's missing, and drafts the follow-up.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Dispatch Inbox: AI load intake, built by Coredelle Digital",
+    template: "%s · Dispatch Inbox",
+  },
+  description: DESCRIPTION,
+  openGraph: {
+    type: "website",
+    siteName: "Dispatch Inbox",
+    title: "Dispatch Inbox: AI load intake, built by Coredelle Digital",
+    description: DESCRIPTION,
+    url: "/",
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -32,7 +48,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${display.variable} ${body.variable} ${mono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        {/* Cookieless page-view counts; only reports on Vercel, not in development */}
+        <Analytics />
+      </body>
     </html>
   );
 }
