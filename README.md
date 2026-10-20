@@ -4,7 +4,7 @@ Small freight brokers and dispatchers get load requests as messy emails and PDF 
 
 **Live demo: [dispatch.coredelle.com](https://dispatch.coredelle.com)** (click *Try the demo*, no signup).
 
-A weekend MVP by [Coredelle Digital](https://coredelle.com). Read the [case study](https://dispatch.coredelle.com/case-study) for the problem, approach and results.
+A weekend MVP by [Coredelle Digital](https://www.coredelle.com). Read the [case study](https://dispatch.coredelle.com/case-study) for the problem, approach and results.
 
 ## What it does
 
